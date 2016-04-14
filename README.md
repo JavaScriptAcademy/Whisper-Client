@@ -1,4 +1,4 @@
-# [Bootstrap](http://getbootstrap.com)
+# [Whisper-Client](https://github.com/JavaScriptAcademy/Whisper-Client
 
 
 ## Table of contents
