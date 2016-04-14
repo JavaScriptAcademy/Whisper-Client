@@ -1,5 +1,4 @@
-# [Whisper-Client](https://github.com/JavaScriptAcademy/Whisper-Client
-
+# Whisper-Client
 
 ## Table of contents
 
