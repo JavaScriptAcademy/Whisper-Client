@@ -14,12 +14,9 @@ Several quick start options are available:
 * Clone the repo: `git@github.com:JavaScriptAcademy/Whisper-Client.git`.
 
 ## Modules
- * chats
- * all room list
- * create new room
- * chatting room
- * profile management
- * authentication
+ * room services
+ * user services
+ *
 ## Creators
 
 **Yancey Yan**
