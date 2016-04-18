@@ -47,4 +47,4 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+})
