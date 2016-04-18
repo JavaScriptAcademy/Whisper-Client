@@ -23,17 +23,17 @@
 <script src="js/socket.io.js"></script>
 
 <!-- your app's js -->
-<script src="js/app.js"></script>
 <script type="text/javascript">
-    var socket = io('http://localhost:3030');
-    const app = feathers()
-    .configure(feathers.socketio(socket))
-    .configure(feathers.hooks())
-    // Use localStorage to store our login token
-    .configure(feathers.authentication({
-        storage: window.localStorage 
-    }));
+    // var socket = io('http://localhost:3030');
+    // var app = feathers()
+    // .configure(feathers.socketio(socket))
+    // .configure(feathers.hooks())
+    // // Use localStorage to store our login token
+    // .configure(feathers.authentication({
+    //     storage: window.localStorage
+    // }));
 </script>
+<script src="js/app.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/services.js"></script>
 
