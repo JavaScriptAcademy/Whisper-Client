@@ -1,44 +1,27 @@
 <ion-view view-title="NewRoom">
   <ion-content>
-    <div class="list list-inset ">
-      {{text}}
-      <label class="item item-input">
-        <span class="input-label">Room Name</span>
-        <input type="text" name = "name">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Item2</span>
-        <input type="text" name="item2">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Item3</span>
-        <input type="text" name="item3">
-      </label>
-      <div class="item item-toggle">
-       HTML5
-       <label class="toggle toggle-assertive">
-         <input type="checkbox">
-         <div class="track">
-           <div class="handle"></div>
-         </div>
-       </label>
-     </div>
-     <label class="item item-input item-select">
-      <div class="input-label">
-        Lightsaber
-      </div>
-      <select>
-        <option>Blue</option>
-        <option selected>Green</option>
-        <option>Red</option>
-      </select>
-    </label>
-      <label class="item item-input">
-        <span class="input-label">Description</span>
-        <textarea name="description">
-        </textarea>
-      </label>
+    <div class="list list-inset">
+      <form>
+        <label class="item item-input">
+          <span class="input-label">Room Name</span>
+          <input type="text" ng-model="room.name">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Topic</span>
+          <input type="text" ng-model="room.topic">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Discription</span>
+          <input type="text" ng-model="room.discription">
+        </label>
 
+        <label class="item item-input">
+          <img src="#">
+          <span class="input-label">Upload Image</span>
+        </label>
+        <button class="button button-full button-positive"
+         ng-click="createNewRoom()">Create</button>
+      </form>
     </div>
   </ion-content>
 </ion-view>

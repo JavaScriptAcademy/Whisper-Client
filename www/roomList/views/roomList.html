@@ -10,10 +10,10 @@
       </button>
     </div>
     <div class="list list-inset">
-      <a ng-repeat="room in rooms" href="#/{{item.id}}" class="item item-thumbnail-left">
+      <a ng-repeat="room in rooms" href="#/app/chatRoom/{{room._id}}" class="item item-thumbnail-left">
       <img ng-src="{{ room.image }}">
       <h2>{{ room.name }}</h2>
-      <h4>{{ room.description }}</h4>
+      <h4>{{ room.discription }}</h4>
     </a>
     </div>
     <button class="button ion-plus-circled button-block button-balanced"
