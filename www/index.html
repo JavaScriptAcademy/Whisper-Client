@@ -18,13 +18,23 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/core-js/2.1.4/core.min.js"></script>
+    <script src="//npmcdn.com/feathers-client@^1.0.0/dist/feathers.js"></script>
+    <script src="js/socket.io.js"></script>
+
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script type="text/javascript">
+        var socket = io('http://localhost:3030');
+        var app = feathers();
+        app.configure(feathers.socketio(socket));
+    </script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
     <script src="roomList/controllers/roomlist.controller.js"></script>
     <script src="roomList/controllers/newroom.controller.js"></script>
     <script src="roomList/controllers/recentChats.controller.js"></script>
+
   </head>
 
   <body ng-app="starter">
