@@ -1,6 +1,6 @@
-angular.module('starter.controllers', ['starter.services'])
+angular.module('starter.controllers', ['starter.services','ngCookies'])
 
-.controller('AppCtrl',function( $rootScope, $scope, $ionicModal, $timeout,loginService ,$state) {
+.controller('AppCtrl',function( $rootScope, $scope, $cookieStore, $ionicModal, $timeout,loginService ,$state) {
 
   var socket = io('http://localhost:3030');
   var app = feathers()
@@ -59,13 +59,14 @@ angular.module('starter.controllers', ['starter.services'])
   });
 
   $scope.doSignUp = function(){
-    console.log("sign up");
     let newUser = $scope.signUpData;
-
     loginService.CreateNewUser({
       email: newUser.email,
       password: newUser.password
     }, user=>{
+
+      $cookieStore.put("user", user);
+      console.log($cookies);
       $scope.currentUser = user;
       $state.go('app.room', { roomId: 31});
       $scope.closeSignup();
