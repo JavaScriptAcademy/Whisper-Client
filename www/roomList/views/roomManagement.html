@@ -1,0 +1,15 @@
+<ion-view view-title="RoomList">
+  <ion-content>
+    </div>
+    <ion-scroll zooming="true" direction="xy" style="max-height: 500px">
+    <div class="list list-inset">
+      <a ng-repeat="room in rooms" href="#/app/chatRoom/{{room._id}}" class="item item-thumbnail-left">
+      <img ng-src="{{ room.image }}">
+      <h2>{{ room.name }}</h2>
+      <h4>{{ room.discription }}</h4>
+    </a>
+    </div>
+    </ion-scroll>
+
+  </ion-content>
+</ion-view>

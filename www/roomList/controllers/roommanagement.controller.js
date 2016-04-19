@@ -1,6 +1,6 @@
-angular.module('starter.roomListCtrl', ['ionic'])
+angular.module('starter.roommanagement', ['ionic'])
 
-.controller('RoomListCtrl', function($rootScope,$scope,$state,roomListService,$ionicGesture) {
+.controller('RoomManagement', function($rootScope,$scope,$state,roomListService) {
   $scope.rooms = [];
   var roomsService = $rootScope.app.service('rooms');
 
@@ -13,11 +13,6 @@ angular.module('starter.roomListCtrl', ['ionic'])
   roomsService.on('created', function(room){
     $scope.rooms.push(room.messages);
   });
-
-  $scope.enterRoom = function(room){
-    //insert user into rooms.members
-    $state.go('app.room',{roomId: room._id});
-  }
   //pull to fresh
   $scope.doRefresh = function() {
     console.log('Refreshing!');

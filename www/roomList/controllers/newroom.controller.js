@@ -11,8 +11,8 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
     roomListService.CreateRoom(newRoom,(response)=>{
       $scope.room = {};
       console.log('create room get response: ', response);
+      $state.go('app.room',{roomId: response.data._id});
     });
-    $state.go('app.room');
   };
 
 
