@@ -13,6 +13,11 @@ angular.module('starter.roomlistservice', [])
     CreateRoom:function(room, successCallback ){
       $http.post('http://localhost:3030/rooms/', room).then(successCallback);
     },
+    addNewMember:function(room, successCallback){
+      $http.post('http://localhost:3030/rooms/updateUser', room).then(function(res){
+        successCallback(res);
+      });
+    }
 
   }
 })

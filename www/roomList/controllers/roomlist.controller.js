@@ -16,6 +16,16 @@ angular.module('starter.roomListCtrl', ['ionic'])
 
   $scope.enterRoom = function(room){
     //insert user into rooms.members
+    let newMember = $scope.currentUser;
+    console.log(newMember);
+    roomListService.addNewMember({
+      roomId: room._id,
+      userId: newMember._id,
+      nickname:newMember.nickname,
+      profileImage:newMember.profileImage
+    },(res)=>{
+      console.log(res);
+    })
     $state.go('app.room',{roomId: room._id});
   }
   //pull to fresh
