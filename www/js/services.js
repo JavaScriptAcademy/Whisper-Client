@@ -1,35 +1,41 @@
 angular.module('starter.services', [])
 .factory('awesomeService', function($http) {
   return {
-    PostMessage: function(message, successCallback) {
-      $http.post('http://localhost:3030/messages/', message).then(successCallback);
+    PostMessage: function(message) {
+      $http.post('http://localhost:3030/messages/', message);
     },
-    GetAllMessage:function(successCallback){
+    GetAllMessage:function(){
       $http({
         url: "http://localhost:3030/messages/",
         method: "GET",
         params: {
           $sort: { createdAt: -1 }
         }
-      }).then(successCallback);
+      });
     }
   }
 })
-.factory('loginService',function($http){
+.factory('loginService',function($rootScope, $http){
   return{
-    CreateNewUser : function(user){
-      console.log(user);
-      $http.post('http://localhost:3030/signup/', user);
+    CreateNewUser : function(user, successCallback){
+      return $http({
+                    method: 'POST',
+                    url: 'http://localhost:3030/signup/',
+                    data: user,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).success(successCallback);
+
     },
-    onLogin : function(email,password){
-      console.log(email,password);
-      app.authenticate({
+    onLogin : function(email, password, successCallback){
+      $rootScope.app.authenticate({
         type: 'local',
         'email': email,
         'password': password
-      }).then(function(result){
-        console.log('Authenticated!', app.get('token'));
-      }).catch(function(error){
+      })
+      .then(successCallback)
+      .catch(function(error){
         console.error('Error authenticating!', error);
       });
     }

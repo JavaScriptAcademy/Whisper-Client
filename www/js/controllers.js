@@ -1,16 +1,28 @@
 angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl',function($scope, $ionicModal, $timeout,loginService ,$state) {
+.controller('AppCtrl',function( $rootScope, $scope, $ionicModal, $timeout,loginService ,$state) {
+
+  var socket = io('http://localhost:3030');
+  var app = feathers()
+  .configure(feathers.socketio(socket))
+  .configure(feathers.hooks())
+  // Use localStorage to store our login token
+  .configure(feathers.authentication({
+      storage: window.localStorage
+  }));
+
+  $rootScope.app = app;
 
   $scope.loginData = {};
   $scope.signUpData = {};
+  $scope.currentUser = null;
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
-  });  
+  });
 
   $ionicModal.fromTemplateUrl('templates/signup.html', {
     scope: $scope
@@ -29,20 +41,21 @@ angular.module('starter.controllers', ['starter.services'])
   // Open the login modal
   $scope.login = function() {
     $scope.modal.show();
-  };  
+  };
 
   $scope.signup = function() {
     $scope.signUpModal.show();
+  };
+
+  $scope.logout = function() {
+    $rootScope.app.logout();
+    $scope.currentUser = null;
   };
 
 
 
   const userService = app.service('users');
   userService.on('created',function(){
-    console.log('signed up a new user');
-
-    $state.go('app.room', { roomId: 11});
-
   });
 
   $scope.doSignUp = function(){
@@ -50,15 +63,21 @@ angular.module('starter.controllers', ['starter.services'])
     loginService.CreateNewUser({
       email: newUser.email,
       password: newUser.password
+    }, user=>{
+
+      $scope.currentUser = user;
+      $state.go('app.room', { roomId: 31});
+      $scope.closeSignup();
     });
+
   }
 
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
 
     loginService.onLogin($scope.loginData.email,$scope.loginData.password,()=>{
+      console.log(1111);
     });
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
@@ -121,11 +140,11 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 
-.controller('MessagesControl', function($scope, $timeout, $ionicScrollDelegate,awesomeService) {
+.controller('MessagesControl', function($rootScope, $scope, $timeout, $ionicScrollDelegate,awesomeService) {
   $scope.messages = [];
   // Retrieve a connection to the /messages service on the server
   // This service will use websockets for all communication
-  var messages = app.service('messages');
+  var messages = $rootScope.app.service('messages');
 
   // Listen for when a new message has been created
   messages.on('created', function(message) {
@@ -139,7 +158,6 @@ angular.module('starter.controllers', ['starter.services'])
 
 
   awesomeService.GetAllMessage(responses => {
-    console.log(responses);
     $scope.messages = responses.data.data;
   });
 

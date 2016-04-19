@@ -1,8 +1,8 @@
 angular.module('starter.roomListCtrl', ['ionic'])
 
-.controller('RoomListCtrl', function($scope,$state,roomListService) {
+.controller('RoomListCtrl', function($rootScope,$scope,$state,roomListService) {
   $scope.rooms = [];
-  var roomsService = app.service('rooms');
+  var roomsService = $rootScope.app.service('rooms');
 
   //init all room list
   roomListService.GetAllRooms((response) => {

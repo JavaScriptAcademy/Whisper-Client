@@ -1,6 +1,6 @@
 angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
 
-.controller('NewRoomCtrl', function($scope,$state,roomListService) {
+.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService) {
   $scope.room = {};
   $scope.createNewRoom = function(){
     var newRoom = {
