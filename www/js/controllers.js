@@ -48,7 +48,6 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.logout = function() {
-    console.log($scope.currentUser);
     $rootScope.app.logout();
     $scope.currentUser = null;
   };
@@ -77,9 +76,9 @@ angular.module('starter.controllers', ['starter.services'])
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
 
     loginService.onLogin($scope.loginData.email,$scope.loginData.password,()=>{
+      console.log(1111);
     });
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
@@ -103,8 +102,6 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-// #############################################################
-// #############################################################
 .directive('input', function($timeout) {
   return {
     restrict: 'E',

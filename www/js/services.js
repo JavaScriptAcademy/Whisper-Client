@@ -28,13 +28,14 @@ angular.module('starter.services', [])
                 }).success(successCallback);
 
     },
-    onLogin : function(email,password){
+    onLogin : function(email, password, successCallback){
       $rootScope.app.authenticate({
         type: 'local',
         'email': email,
         'password': password
-      }).then(function(result){
-      }).catch(function(error){
+      })
+      .then(successCallback)
+      .catch(function(error){
         console.error('Error authenticating!', error);
       });
     }

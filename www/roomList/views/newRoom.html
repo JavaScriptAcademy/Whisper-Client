@@ -1,0 +1,27 @@
+<ion-view view-title="NewRoom">
+  <ion-content>
+    <div class="list list-inset">
+      <form>
+        <label class="item item-input">
+          <span class="input-label">Room Name</span>
+          <input type="text" ng-model="room.name">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Topic</span>
+          <input type="text" ng-model="room.topic">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Discription</span>
+          <input type="text" ng-model="room.discription">
+        </label>
+
+        <label class="item item-input">
+          <img src="#">
+          <span class="input-label">Upload Image</span>
+        </label>
+        <button class="button button-full button-positive"
+         ng-click="createNewRoom()">Create</button>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

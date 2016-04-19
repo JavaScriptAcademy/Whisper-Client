@@ -1,0 +1,25 @@
+<ion-view view-title="RoomList">
+  <ion-content>
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search">
+      </label>
+      <button class="button button-clear">
+        Cancel
+      </button>
+    </div>
+    <div class="list list-inset">
+      <a ng-repeat="room in rooms" href="#/app/chatRoom/{{room._id}}" class="item item-thumbnail-left">
+      <img ng-src="{{ room.image }}">
+      <h2>{{ room.name }}</h2>
+      <h4>{{ room.discription }}</h4>
+    </a>
+    </div>
+    <button class="button ion-plus-circled button-block button-balanced"
+     id="createRoom" data-ui-sref="app.newroom">
+      New Room
+    </button>
+
+  </ion-content>
+</ion-view>
