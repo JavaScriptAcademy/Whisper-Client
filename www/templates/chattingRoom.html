@@ -7,12 +7,12 @@
 <ion-content class="content-stable"
 on-swipe-left="hideTime = false"
 on-swipe-right="hideTime = true">
-<div ng-repeat="message in messages" ng-class="{other: message.userId != myId}" class="messages">
+<div ng-repeat="message in messages" ng-class="{other: message.userId != currentUser._id}" class="messages">
 
-<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">
-  <img ng-src="{{currentUser.profileImage}}" alt="Anonymous" class="avatar">
+<div class="message">
+  <img ng-src="{{message.userProfileImage}}" alt="Anonymous" class="avatar">
   <div class="message-right">
-    <span class="message-header">{{currentUser.nickname}}</span>
+    <span class="message-header">{{message.userNickname}}</span>
     <span class="message-body">{{ message.text }}</span>
   </div>
 </div>

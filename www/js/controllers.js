@@ -8,7 +8,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   .configure(feathers.hooks())
   // Use localStorage to store our login token
   .configure(feathers.authentication({
-      storage: window.localStorage
+    storage: window.localStorage
   }));
 
   $rootScope.app = app;
@@ -155,26 +155,25 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 })
 
-.controller('MessagesControl', function($rootScope, $scope, $timeout, $ionicScrollDelegate,awesomeService) {
+.controller('MessagesControl', function($rootScope, $scope, $state, $timeout, $ionicScrollDelegate,awesomeService) {
   $scope.messages = [];
-  // Retrieve a connection to the /messages service on the server
-  // This service will use websockets for all communication
-  var messages = $rootScope.app.service('messages');
+  var rooms = $rootScope.app.service('rooms');
 
-  // Listen for when a new message has been created
-  messages.on('created', function(message) {
-    $scope.messages.push(message);
+  awesomeService.GetAllMessage($state.params.roomId, (responses) => {
+    $scope.messages = responses.messages;
+  });
+
+  rooms.on('updated', function(message) {
+    awesomeService.GetAllMessage($state.params.roomId, (responses) => {
+      $scope.messages = responses.messages;
+    });
+
     $timeout(function() {
       $ionicScrollDelegate.scrollBottom(true);
     }, 300);
   });
 
-  awesomeService.GetAllMessage(responses => {
-    $scope.messages = responses.data;
-  });
-
   $scope.hideTime = true;
-
   var alternate,
   isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
 
@@ -183,32 +182,40 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
 
     var d = new Date();
     d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
+    let newMessage = {
+     text:$scope.data.message,
+     userId:$scope.currentUser._id,
+     userNickname:$scope.currentUser.nickname,
+     userProfileImage:$scope.currentUser.profileImage
+   }
+   rooms.update({
+    _id:$state.params.roomId
+  },{
+    $push:{
+      messages:newMessage
+    }
+  }).then(message => console.log(message));
 
-    awesomeService.PostMessage({text:$scope.data.message},response => {
-      console.log(response);
-    });
+   delete $scope.data.message;
+   $ionicScrollDelegate.scrollBottom(true);
+
+ };
 
 
-    delete $scope.data.message;
+ $scope.inputUp = function() {
+  if (isIOS) $scope.data.keyboardHeight = 216;
+  $timeout(function() {
     $ionicScrollDelegate.scrollBottom(true);
+  }, 300);
 
-  };
+};
 
+$scope.inputDown = function() {
+  if (isIOS) $scope.data.keyboardHeight = 0;
+  $ionicScrollDelegate.resize();
+};
 
-  $scope.inputUp = function() {
-    if (isIOS) $scope.data.keyboardHeight = 216;
-    $timeout(function() {
-      $ionicScrollDelegate.scrollBottom(true);
-    }, 300);
-
-  };
-
-  $scope.inputDown = function() {
-    if (isIOS) $scope.data.keyboardHeight = 0;
-    $ionicScrollDelegate.resize();
-  };
-
-  $scope.closeKeyboard = function() {
+$scope.closeKeyboard = function() {
     // cordova.plugins.Keyboard.close();
   };
 

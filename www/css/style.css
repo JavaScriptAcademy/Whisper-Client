@@ -74,6 +74,10 @@
   color: black !important;
   background-color: #C7C7CC !important;
 }
+.messages.other img.avatar{
+  margin-left: 10px;
+  float: right;
+}
 
 .messages span.message-body {
   background: #007AFF !important;
