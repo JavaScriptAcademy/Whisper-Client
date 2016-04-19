@@ -1,6 +1,6 @@
-angular.module('starter.controllers', ['starter.services'])
+angular.module('starter.controllers', ['starter.services','ngCookies'])
 
-.controller('AppCtrl',function( $rootScope, $scope, $ionicModal, $timeout,loginService ,$state) {
+.controller('AppCtrl',function( $rootScope, $scope, $cookies, $ionicModal, $timeout,loginService ,$state) {
 
   var socket = io('http://localhost:3030');
   var app = feathers()
@@ -15,7 +15,9 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.loginData = {};
   $scope.signUpData = {};
-  $scope.currentUser = null;
+  $scope.currentUser = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
+
+  console.log(  $scope.currentUser  );
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -49,6 +51,7 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.logout = function() {
     $rootScope.app.logout();
+    $cookies.remove('user');
     $scope.currentUser = null;
   };
 
@@ -64,27 +67,23 @@ angular.module('starter.controllers', ['starter.services'])
       email: newUser.email,
       password: newUser.password
     }, user=>{
-
-      $scope.currentUser = user;
-      $state.go('app.room', { roomId: 31});
+      $cookies.put('user', JSON.stringify(user));
+      $scope.currentUser = JSON.parse($cookies.get('user'));
+      $state.go('app.roomlist');
       $scope.closeSignup();
     });
 
   }
 
+  $scope.doLogin = function(){
+    let loginUser = $scope.signUpData;
+    loginService.onLogin({email:loginUser.email,password:loginUser.password}, ()=>{
+      console.log(111);
+    })
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
+  }
 
-    loginService.onLogin($scope.loginData.email,$scope.loginData.password,()=>{
-      console.log(1111);
-    });
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
+
 })
 
 .controller('PlaylistsCtrl', function($scope) {

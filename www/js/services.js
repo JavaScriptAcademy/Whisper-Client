@@ -27,17 +27,6 @@ angular.module('starter.services', [])
                     }
                 }).success(successCallback);
 
-    },
-    onLogin : function(email, password, successCallback){
-      $rootScope.app.authenticate({
-        type: 'local',
-        'email': email,
-        'password': password
-      })
-      .then(successCallback)
-      .catch(function(error){
-        console.error('Error authenticating!', error);
-      });
     }
   }
 
