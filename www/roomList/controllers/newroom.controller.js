@@ -9,8 +9,14 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
       'topic': $scope.room.topic,
     };
     roomListService.CreateRoom(newRoom,(response)=>{
+      let newMember = $scope.currentUser;
       $scope.room = {};
-      console.log('create room get response: ', response);
+      roomListService.addNewMember({
+        roomId : response.data._id,
+        userId : newMember._id
+      },(res)=>{
+        console.log(res);
+      })
       $state.go('app.room',{roomId: response.data._id});
     });
   };

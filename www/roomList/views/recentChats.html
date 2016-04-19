@@ -1,44 +1,16 @@
 <ion-view view-title="RecentChats">
   <ion-content>
     <div class="bar bar-header item-input-inset">
-      <label class="item-input-wrapper">
-        <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" placeholder="Search">
-      </label>
-      <button class="button button-clear">
-        Cancel
-      </button>
     </div>
-    <div class="list list-inset" name="oneDay">
-      <div class="item item-divider">
-        One day
-      </div>
-      <a ng-repeat="room in oneDayList" href="#/{{item.id}}" class="item item-thumbnail-left">
+    <ion-scroll zooming="true" direction="xy" style="max-height: 80%">
+    <ion-list inset>
+      <a ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
       <img ng-src="{{ room.image }}">
       <h2>{{ room.name }}</h2>
-      <h4>{{ room.description }}</h4>
-      </a>
-    </div>
-    <div class="list list-inset" name="twoDays">
-      <div class="item item-divider">
-        Two days
-      </div>
-      <a ng-repeat="room in twoDayList" href="#/{{item.id}}" class="item item-thumbnail-left">
-      <img ng-src="{{ room.image }}">
-      <h2>{{ room.name }}</h2>
-      <h4>{{ room.description }}</h4>
-      </a>
-    </div>
-    <div class="list list-inset" name="moreThanTwoDays">
-      <div class="item item-divider">
-        More than two days
-      </div>
-      <a ng-repeat="room in recentList" href="#/{{item.id}}" class="item item-thumbnail-left">
-      <img ng-src="{{ room.image }}">
-      <h2>{{ room.name }}</h2>
-      <h4>{{ room.description }}</h4>
-      </a>
-    </div>
+      <h4>{{ room.discription }}</h4>
+    </a>
+    </ion-list>
+    </ion-scroll>
 
   </ion-content>
 </ion-view>
