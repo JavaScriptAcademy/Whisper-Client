@@ -17,8 +17,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   $scope.signUpData = {};
   $scope.currentUser = $cookies.get('user') ? JSON.parse($cookies.get('user')) : null;
 
-  console.log(  $scope.currentUser  );
-
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -61,25 +59,44 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   userService.on('created',function(){
   });
 
+
+
+
+
   $scope.doSignUp = function(){
     let newUser = $scope.signUpData;
-    loginService.CreateNewUser({
-      email: newUser.email,
-      password: newUser.password
-    }, user=>{
-      $cookies.put('user', JSON.stringify(user));
-      $scope.currentUser = JSON.parse($cookies.get('user'));
-      $state.go('app.roomlist');
-      $scope.closeSignup();
+
+    loginService.generateRandomUser((user)=>{
+      loginService.CreateNewUser({
+        email: newUser.email,
+        password: newUser.password,
+        nickname:  user.results[0].name.first + ' ' + user.results[0].name.last,
+        profileImage: user.results[0].picture.thumbnail
+      }, (user) =>{
+        $cookies.put('user', JSON.stringify(user));
+        $scope.currentUser = JSON.parse($cookies.get('user'));
+        console.log( $scope.currentUser);
+        $state.go('app.roomlist');
+        $scope.closeSignup();
+      });
     });
+
+    $scope.doLogin= function(){
+      let user = $scope.loginData;
+
+      loginService.onLogin({
+        email:user.email,
+        password: user.password
+      },(res)=>{
+        console.log(res)
+      })
+    }
 
   }
 
   $scope.doLogin = function(){
     let loginUser = $scope.signUpData;
-    loginService.onLogin({email:loginUser.email,password:loginUser.password}, ()=>{
-      console.log(111);
-    })
+    loginService.onLogin({email:loginUser.email,password:loginUser.password});
 
   }
 
@@ -138,7 +155,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 })
 
-
 .controller('MessagesControl', function($rootScope, $scope, $timeout, $ionicScrollDelegate,awesomeService) {
   $scope.messages = [];
   // Retrieve a connection to the /messages service on the server
@@ -147,17 +163,14 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
 
   // Listen for when a new message has been created
   messages.on('created', function(message) {
-    console.log('Someone created a message', message);
-    console.log($scope.messages);
     $scope.messages.push(message);
     $timeout(function() {
       $ionicScrollDelegate.scrollBottom(true);
     }, 300);
   });
 
-
   awesomeService.GetAllMessage(responses => {
-    $scope.messages = responses.data.data;
+    $scope.messages = responses.data;
   });
 
   $scope.hideTime = true;
@@ -174,6 +187,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     awesomeService.PostMessage({text:$scope.data.message},response => {
       console.log(response);
     });
+
 
     delete $scope.data.message;
     $ionicScrollDelegate.scrollBottom(true);

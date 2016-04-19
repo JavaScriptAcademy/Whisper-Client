@@ -70,12 +70,12 @@
   -moz-transform: translate3d(120px, 0, 0) !important;
   transform: translate3d(120px, 0, 0) !important;
 }
-.messages.other span {
+.messages.other span.message-body {
   color: black !important;
   background-color: #C7C7CC !important;
 }
 
-.messages span {
+.messages span.message-body {
   background: #007AFF !important;
   display: inline-block !important;
   color: white !important;
@@ -83,4 +83,22 @@
   border-radius: 10px !important;
   text-align: left !important;
   max-width: 240px !important;
+}
+
+.message .message-right{
+  display: inline-block;
+  vertical-align: top;
+}
+.message img.avatar {
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+  flex: none;
+}
+
+.message span.message-header {
+    margin: 0;
+    font-size: 1em;
+    display: block;
+    font-weight: 600;
 }
