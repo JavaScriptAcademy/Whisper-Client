@@ -13,5 +13,14 @@ angular.module('starter.roomListCtrl', ['ionic'])
   roomsService.on('created', function(room){
     $scope.rooms.push(room.messages);
   });
+  //pull to fresh
+  $scope.doRefresh = function() {
+    console.log('Refreshing!');
+    $timeout(function() {
+      // $scope.items.push('New Item ' + Math.floor(Math.random() * 1000) + 4);
+      //Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1000);
+  };
 
 });

@@ -5,9 +5,9 @@ angular.module('starter.roomlistservice', [])
       $http({
         method: 'GET',
         url: 'http://localhost:3030/rooms/',
-        // params: {
-        //   $sorted: { createdAt: -1 }
-        // }
+        params: {
+          $sort: { createdAt: -1 }
+        }
       }).then(successCallback)
     },
     CreateRoom:function(room, successCallback ){
