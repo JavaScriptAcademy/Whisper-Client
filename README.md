@@ -5,7 +5,7 @@
 
 * [Quick start](#quick-start)
 * [Modules](#modules)
-* [Creators](#creators)
+* [Contributors](#Contributors)
 
 ## Quick start
 
@@ -27,7 +27,7 @@ Several quick start options are available:
    * Totally Random Name and Profile Image
 
 
-## Creators
+## Contributors
 
 **Yancey Yan**
 
