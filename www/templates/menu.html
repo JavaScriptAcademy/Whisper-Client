@@ -18,7 +18,7 @@
 </ion-header-bar>
 <ion-content>
 
-<div  class="menuProfile">
+<div  class="menuProfile" ng-show="{{currentUser}}">
   <img ng-src="{{currentUser.profileImage}}" alt="Anonymous" class="avatar">
   <div>
     <span class="message-header">{{currentUser.nickname}}</span>
