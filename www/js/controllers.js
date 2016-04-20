@@ -59,10 +59,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   userService.on('created',function(){
   });
 
-
-
-
-
   $scope.doSignUp = function(){
     let newUser = $scope.signUpData;
 

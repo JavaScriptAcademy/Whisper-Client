@@ -1,5 +1,5 @@
-/* Empty. Add your own CSS if you like */
-.scroll {
+ Empty. Add your own CSS if you like */
+ .scroll {
   padding: 10px 0 50px !important;
 }
 
@@ -116,8 +116,19 @@
 }
 
 .message span.message-header {
-    margin: 0;
-    font-size: 1em;
-    display: block;
-    font-weight: 600;
+  margin: 0;
+  font-size: 1em;
+  display: block;
+  font-weight: 600;
+}
+/*#####################*/
+/*#####################*/
+/*side menu style
+/*#####################*/
+/*#####################*/
+.side-menu .icon{
+  margin-right: 10px;
+  font-size: 1.3em;
+  color: #2ecc71;
+  vertical-align: text-bottom;
 }

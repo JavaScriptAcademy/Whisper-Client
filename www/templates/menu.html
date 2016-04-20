@@ -12,13 +12,13 @@
 <ion-nav-view name="menuContent"></ion-nav-view>
 </ion-side-menu-content>
 
-<ion-side-menu side="left">
+<ion-side-menu side="left" class="side-menu">
 <ion-header-bar class="bar-stable">
 <h1 class="title">Menu</h1>
 </ion-header-bar>
 <ion-content>
 
-<div  class="menuProfile" ng-show="{{currentUser}}">
+<div  class="menuProfile" ng-show="currentUser != null">
   <img ng-src="{{currentUser.profileImage}}" alt="Anonymous" class="avatar">
   <div>
     <span class="message-header">{{currentUser.nickname}}</span>
@@ -27,21 +27,27 @@
 
 <ion-list>
 <ion-item menu-close ng-click="login()" ng-hide="currentUser">
+<i class="icon ion-log-in"></i>
 Login
 </ion-item>
 <ion-item menu-close ng-click="signup()" ng-hide="currentUser">
+<i class="icon ion-android-arrow-dropup-circle"></i>
 Signup
 </ion-item>
 <ion-item menu-close ng-click="logout()" ng-show="currentUser">
+<i class="icon ion-log-out"></i>
 Logout
 </ion-item>
 <ion-item menu-close ui-sref="app.roomlist">
+<i class="icon ion-ios-chatboxes"></i>
 All Rooms
 </ion-item>
 <ion-item menu-close ui-sref="app.recentchats">
+<i class="icon ion-ios-chatbubble"></i>
 Recent Visits
 </ion-item>
 <ion-item menu-close ui-sref="app.management">
+<i class="icon ion-ios-gear"></i>
 Room Management
 </ion-item>
 </ion-list>
