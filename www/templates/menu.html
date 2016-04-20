@@ -25,8 +25,6 @@
   </div>
 </div>
 
-
-
 <ion-list>
 <ion-item menu-close ng-click="login()" ng-hide="currentUser">
 Login
@@ -37,14 +35,14 @@ Signup
 <ion-item menu-close ng-click="logout()" ng-show="currentUser">
 Logout
 </ion-item>
-<ion-item menu-close href="#/app/search">
-Search
+<ion-item menu-close ui-sref="app.roomlist">
+All Rooms
 </ion-item>
-<ion-item menu-close href="#/app/browse">
-Browse
+<ion-item menu-close ui-sref="app.recentchats">
+Recent Visits
 </ion-item>
-<ion-item menu-close href="#/app/playlists">
-Playlists
+<ion-item menu-close ui-sref="app.management">
+Room Management
 </ion-item>
 </ion-list>
 </ion-content>
