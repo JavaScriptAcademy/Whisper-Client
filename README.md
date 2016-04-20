@@ -1,4 +1,5 @@
 # Whisper-Client
+**  A Totally Anonymous Chatting System**
 
 ## Table of contents
 
@@ -14,8 +15,16 @@ Several quick start options are available:
 * Clone the repo: `git@github.com:JavaScriptAcademy/Whisper-Client.git`.
 
 ## Modules
- * room services
+ * Online Chat Room
+   * Realtime message
+   * Anonymous chatting
+ * Room Services
+   * All Room List
+   * Recent Visit Rooms
+   * Room Management
  * user services
+   * Authencation
+   * Totally Random Name and Profile Image
 
 
 ## Creators
