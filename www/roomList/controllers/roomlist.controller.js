@@ -1,30 +1,38 @@
-angular.module('starter.roomListCtrl', ['ionic'])
+angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
 
-.controller('RoomListCtrl', function($rootScope,$scope,$state,roomListService,$ionicGesture) {
+.controller('RoomListCtrl', function($rootScope,$scope,$state,$timeout,$ionicScrollDelegate,roomListService) {
   $scope.rooms = [];
   var roomsService = $rootScope.app.service('rooms');
 
   //init all room list
   roomListService.GetAllRooms((response) => {
-    $scope.rooms = response.data.data;
+    $scope.rooms = response.data;
   });
 
   //listen to rooms events
   roomsService.on('created', function(room){
-    $scope.rooms.push(room.messages);
+    // $scope.rooms.push(room);
+   roomListService.GetAllRooms((response) => {
+    $scope.rooms = response.data;
+    });
+
+    $timeout(function() {
+      $ionicScrollDelegate.scrollBottom(true);
+    }, 300);
   });
 
-  $scope.enterRoom = function(room){
+  $scope.enterRoom =  function(room){
     //insert user into rooms.members
     let newMember = $scope.currentUser;
     roomListService.addNewMember({
-      roomId : room._id,
+      room : room,
       userId : newMember._id
     },(res)=>{
       console.log(res);
     })
     $state.go('app.room',{roomId: room._id});
-  }
+  };
+
   //pull to fresh
   $scope.doRefresh = function() {
     console.log('Refreshing!');
