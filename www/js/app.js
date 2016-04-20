@@ -25,15 +25,25 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+  .state('home', {
+    url: '/home',
+    controller: 'HomeCtrl',
+    templateUrl: 'templates/home.html'
+  })
+  .state('new', {
+    url:'/new',
+    controller: 'RecordCtrl',
+    templateUrl: 'templates/new.html'
+  })
   .state('app.roomlist', {
-      url: '/roomlist',
-      views: {
-        'menuContent': {
-          templateUrl: 'roomList/views/roomList.html',
-          controller: 'RoomListCtrl',
-        }
+    url: '/roomlist',
+    views: {
+      'menuContent': {
+        templateUrl: 'roomList/views/roomList.html',
+        controller: 'RoomListCtrl',
       }
-    })
+    }
+  })
   .state('app.newroom', {
     url: '/newroom',
     views: {
