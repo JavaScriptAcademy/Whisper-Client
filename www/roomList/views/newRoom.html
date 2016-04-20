@@ -1,7 +1,7 @@
 <ion-view view-title="NewRoom">
   <ion-content>
     <div class="list list-inset">
-      <form>
+      <form ng-submit="createNewRoom()">
         <label class="item item-input">
           <span class="input-label">Room Name</span>
           <input type="text" ng-model="room.name">
@@ -22,8 +22,7 @@
             <input type="file" ng-model="imageUpload" class="imageUpload"></input>
           </div>
         </label>
-        <button class="button button-full button-positive"
-         ng-click="createNewRoom()">Create</button>
+        <button class="button button-full button-positive">Create</button>
       </form>
     </div>
   </ion-content>
