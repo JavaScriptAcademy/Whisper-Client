@@ -16,8 +16,11 @@
         </label>
 
         <label class="item item-input">
-          <img src="#">
           <span class="input-label">Upload Image</span>
+          <div class="imageHolder">
+            <img src="{{image_src}}" class="roomImage">
+            <input type="file" ng-model="imageUpload" class="imageUpload"></input>
+          </div>
         </label>
         <button class="button button-full button-positive"
          ng-click="createNewRoom()">Create</button>
