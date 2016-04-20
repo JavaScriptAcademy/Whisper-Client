@@ -1,5 +1,5 @@
 # Whisper-Client
-**  A Totally Anonymous Chatting System**
+**A Totally Anonymous Chatting System**
 
 ## Table of contents
 
