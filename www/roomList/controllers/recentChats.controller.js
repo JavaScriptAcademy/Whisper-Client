@@ -5,9 +5,10 @@ angular.module('starter.recentChatsCtrl', ['ionic','starter.roomlistservice'])
 
   //init all room list
   var rooms = [];
-  roomListService.GetAllRooms((response) => {
-    rooms = response.data.data;
-  });
-  console.log('rooms',rooms);
+  var currentUser = $scope.currentUser;
+  function setRooms(res){
+    rooms = res.visitedRooms;
+  }
+  roomListService.GetRecentVisit(currentUser._id,setRooms);
 
 });
