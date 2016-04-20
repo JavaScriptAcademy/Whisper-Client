@@ -7,7 +7,6 @@ angular.module('starter.recentChatsCtrl', ['ionic','starter.roomlistservice'])
   var rooms = [];
   var currentUser = $scope.currentUser;
   function setRooms(res){
-    console.log('set rooms start');
     rooms = res.visitedRooms;
   }
   roomListService.GetRecentVisit(currentUser._id,setRooms);
