@@ -227,4 +227,8 @@ $scope.closeKeyboard = function() {
     $ionicScrollDelegate.scrollBottom(true);
   }, 300);
 
+})
+.controller('menuControl', function( $scope, $state) {
+
 });
+
