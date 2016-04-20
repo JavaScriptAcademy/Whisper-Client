@@ -1,6 +1,6 @@
 angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
 
-.controller('RoomListCtrl', function($rootScope,$scope,$state,roomListService) {
+.controller('RoomListCtrl', function($rootScope,$scope,$state,$timeout,$ionicScrollDelegate,roomListService) {
   $scope.rooms = [];
   var roomsService = $rootScope.app.service('rooms');
 
@@ -11,7 +11,14 @@ angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
 
   //listen to rooms events
   roomsService.on('created', function(room){
-    $scope.rooms.push(room.messages);
+    // $scope.rooms.push(room);
+   roomListService.GetAllRooms((response) => {
+    $scope.rooms = response.data;
+    });
+
+    $timeout(function() {
+      $ionicScrollDelegate.scrollBottom(true);
+    }, 300);
   });
 
   $scope.enterRoom =  function(room){

@@ -1,8 +1,5 @@
 <ion-view view-title="RecentChats">
   <ion-content>
-    <div class="bar bar-header item-input-inset">
-    </div>
-    <ion-scroll zooming="true" direction="xy" style="max-height: 80%">
     <ion-list inset>
       <a ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
       <img ng-src="{{ room.image }}">
@@ -10,7 +7,5 @@
       <h4>{{ room.discription }}</h4>
     </a>
     </ion-list>
-    </ion-scroll>
-
   </ion-content>
 </ion-view>

@@ -4,7 +4,7 @@
 <ion-nav-back-button>
 </ion-nav-back-button>
 
-<ion-nav-buttons side="left">
+<ion-nav-buttons side="left" ng-controller="menuControl">
 <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
 </button>
 </ion-nav-buttons>
@@ -17,6 +17,14 @@
 <h1 class="title">Menu</h1>
 </ion-header-bar>
 <ion-content>
+
+<div  class="menuProfile" ng-show="{{currentUser}}">
+  <img ng-src="{{currentUser.profileImage}}" alt="Anonymous" class="avatar">
+  <div>
+    <span class="message-header">{{currentUser.nickname}}</span>
+  </div>
+</div>
+
 <ion-list>
 <ion-item menu-close ng-click="login()" ng-hide="currentUser">
 Login
@@ -27,14 +35,14 @@ Signup
 <ion-item menu-close ng-click="logout()" ng-show="currentUser">
 Logout
 </ion-item>
-<ion-item menu-close href="#/app/search">
-Search
+<ion-item menu-close ui-sref="app.roomlist">
+All Rooms
 </ion-item>
-<ion-item menu-close href="#/app/browse">
-Browse
+<ion-item menu-close ui-sref="app.recentchats">
+Recent Visits
 </ion-item>
-<ion-item menu-close href="#/app/playlists">
-Playlists
+<ion-item menu-close ui-sref="app.management">
+Room Management
 </ion-item>
 </ion-list>
 </ion-content>

@@ -8,6 +8,4 @@ angular.module('starter.recentChatsCtrl', ['ionic','starter.roomlistservice'])
   };
   var currentUser = $scope.currentUser;
   roomListService.GetRecentVisit(currentUser._id,setRooms);
-
-
 });

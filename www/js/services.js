@@ -1,16 +1,10 @@
 angular.module('starter.services', [])
 .factory('awesomeService', function($http) {
   return {
-    PostMessage: function(message) {
-      $http.post('http://localhost:3030/messages/', message);
-    },
-    GetAllMessage:function(successCallback){
+    GetAllMessage:function(roomId, successCallback){
       $http({
-        url: "http://localhost:3030/messages/",
-        method: "GET",
-        params: {
-          $sort: { createdAt: -1 }
-        }
+        url: "http://localhost:3030/rooms/"+roomId,
+        method: "GET"
       }).success((res)=>{
         successCallback(res);
       });

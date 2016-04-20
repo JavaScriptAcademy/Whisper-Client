@@ -2,7 +2,6 @@
   <ion-content>
     <ion-refresher on-refresh="doRefresh()">
     </ion-refresher>
-    </div>
     <ion-scroll zooming="true" direction="y" style="max-height: 500px">
       <ion-list inset>
         <a ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
@@ -12,11 +11,11 @@
         </a>
       </ion-list>
     </ion-scroll>
-    <ion-footer class="bar bar-footer bar-balanced">
+    <ion-footer-bar class="bar bar-footer bar-balanced">
       <button class="button ion-plus-circled button-block button-balanced"
        id="createRoom" data-ui-sref="app.newroom" id="newroom">
         New Room
       </button>
-    </ion-footer>
+   </ion-footer-bar>
   </ion-content>
 </ion-view>
