@@ -237,7 +237,28 @@ $scope.closeKeyboard = function() {
 
   $scope.play = function(x) {
     console.log('play', x);
-    Sounds.play(x);
+    // Sounds.play(x);
+    Sounds.get().then(function(sounds) {
+      var sound = sounds[x];
+      console.log(sound);
+
+        /*
+        Ok, so on Android, we just work.
+        On iOS, we need to rewrite to ../Library/NoCloud/FILE
+        */
+        var mediaUrl = sound.file;
+
+        // if(device.platform.indexOf("iOS") >= 0) {
+        //   mediaUrl = "../Library/NoCloud/" + mediaUrl.split("/").pop();
+        // }
+        var media = new Media(mediaUrl, function(e) {
+          media.release();
+        }, function(err) {
+          console.log("media err", err);
+        });
+        media.play();           
+      });
+
   }
 
   $scope.delete = function(x) {
@@ -297,33 +318,40 @@ $scope.closeKeyboard = function() {
     var filename = filepart + "." + extension;
     console.log("new filename is "+filename);
 
-    window.resolveLocalFileSystemURL(loc, function(d) {
-      window.resolveLocalFileSystemURL($scope.sound.file, function(fe) {
-        fe.copyTo(d, filename, function(e) {
-          console.log('success inc opy');
-          console.dir(e);
-          $scope.sound.file = e.nativeURL;
-          $scope.sound.path = e.fullPath;
-
-          Sounds.save($scope.sound).then(function() {
-            $ionicHistory.nextViewOptions({
-              disableBack: true
-            });
-            $state.go("home");
-          });
-
-        }, function(e) {
-          console.log('error in coipy');console.dir(e);
-        });
-      }, function(e) {
-        console.log("error in inner bullcrap");
-        console.dir(e);
+    Sounds.save($scope.sound).then(function() {
+      $ionicHistory.nextViewOptions({
+        disableBack: true
       });
-
-
-    }, function(e) {
-      console.log('error in fs');console.dir(e);
+      $state.go("home");
     });
+
+    // window.resolveLocalFileSystemURL(loc, function(d) {
+    //   window.resolveLocalFileSystemURL($scope.sound.file, function(fe) {
+    //     fe.copyTo(d, filename, function(e) {
+    //       console.log('success inc opy');
+    //       console.dir(e);
+    //       $scope.sound.file = e.nativeURL;
+    //       $scope.sound.path = e.fullPath;
+
+    //       Sounds.save($scope.sound).then(function() {
+    //         $ionicHistory.nextViewOptions({
+    //           disableBack: true
+    //         });
+    //         $state.go("home");
+    //       });
+
+    //     }, function(e) {
+    //       console.log('error in coipy');console.dir(e);
+    //     });
+    //   }, function(e) {
+    //     console.log("error in inner bullcrap");
+    //     console.dir(e);
+    //   });
+
+
+    // }, function(e) {
+    //   console.log('error in fs');console.dir(e);
+    // });
 
 
   }
