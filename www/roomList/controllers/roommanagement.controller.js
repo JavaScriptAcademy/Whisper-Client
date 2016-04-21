@@ -10,9 +10,9 @@ angular.module('starter.roommanagement', ['ionic'])
   });
 
   //listen to rooms events
-  roomsService.on('created', function(room){
-    $scope.rooms.push(room.messages);
-  });
+  // roomsService.on('created', function(room){
+  //   $scope.rooms.push(room.messages);
+  // });
   //pull to fresh
   $scope.doRefresh = function() {
     console.log('Refreshing!');
