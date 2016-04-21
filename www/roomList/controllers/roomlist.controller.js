@@ -28,7 +28,7 @@ angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
       room : room,
       userId : newMember._id
     },(res)=>{
-      console.log(res);
+      console.log('res',res);
     })
     $state.go('app.room',{roomId: room._id, roomName:room.name});
   };
