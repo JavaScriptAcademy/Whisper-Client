@@ -2,20 +2,18 @@
   <ion-content>
     <ion-refresher on-refresh="doRefresh()">
     </ion-refresher>
-    <ion-scroll zooming="true" direction="y" style="max-height: 500px">
-      <ion-list inset>
-        <a ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
-          <img ng-src="{{ room.image }}">
+      <ion-list>
+        <ion-item ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
+           <img ng-src="https://unsplash.it/100/100/?random">
           <h2>{{ room.name }}</h2>
-          <h4>{{ room.discription }}</h4>
-        </a>
+          <p>{{ room.discription }}</p>
+        </ion-item>
       </ion-list>
-    </ion-scroll>
-    <ion-footer-bar class="bar bar-footer bar-balanced">
-      <button class="button ion-plus-circled button-block button-balanced"
-       id="createRoom" data-ui-sref="app.newroom" id="newroom">
-        New Room
-      </button>
-   </ion-footer-bar>
   </ion-content>
+    <div class="bar bar-footer bar-balanced">
+      <button class="button ion-plus-circled button-block button-balanced"
+             id="createRoom" data-ui-sref="app.newroom">
+              New Room
+      </button>
+    </div>
 </ion-view>

@@ -30,7 +30,7 @@ angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
     },(res)=>{
       console.log(res);
     })
-    $state.go('app.room',{roomId: room._id});
+    $state.go('app.room',{roomId: room._id, roomName:room.name});
   };
 
   //pull to fresh

@@ -59,10 +59,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   userService.on('created',function(){
   });
 
-
-
-
-
   $scope.doSignUp = function(){
     let newUser = $scope.signUpData;
 
@@ -101,20 +97,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 
 
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-  { title: 'Reggae', id: 1 },
-  { title: 'Chill', id: 2 },
-  { title: 'Dubstep', id: 3 },
-  { title: 'Indie', id: 4 },
-  { title: 'Rap', id: 5 },
-  { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 .directive('input', function($timeout) {
@@ -157,11 +139,18 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
 
 .controller('MessagesControl', function($rootScope, $scope, $state, $timeout, $ionicScrollDelegate,awesomeService) {
   $scope.messages = [];
+  $scope.roomName=$state.params.roomName;
   var rooms = $rootScope.app.service('rooms');
 
-  awesomeService.GetAllMessage($state.params.roomId, (responses) => {
-    $scope.messages = responses.messages;
+
+  awesomeService.GetAllMessage($state.params.roomId, (response) => {
+    $scope.topic = response.topic;
+    $scope.roomName = response.name;
+    $scope.messages = response.messages;
   });
+
+
+
 
   rooms.on('updated', function(message) {
     awesomeService.GetAllMessage($state.params.roomId, (responses) => {
@@ -245,12 +234,12 @@ $scope.closeKeyboard = function() {
     console.log('enter');
     getSounds();
   });
-  
+
   $scope.play = function(x) {
     console.log('play', x);
-    Sounds.play(x); 
+    Sounds.play(x);
   }
-  
+
   $scope.delete = function(x) {
     console.log('delete', x);
     Sounds.get().then(function(sounds) {
@@ -266,41 +255,41 @@ $scope.closeKeyboard = function() {
       });
     });
   }
-  
+
   $scope.cordova = {loaded:false};
   $ionicPlatform.ready(function() {
     $scope.$apply(function() {
       $scope.cordova.loaded = true;
     });
   });
-  
+
 })
 .controller('RecordCtrl', function($scope, Sounds, $state, $ionicHistory) {
 
   $scope.sound = {name:""};
-  
+
   $scope.saveSound = function() {
     console.log('trying to save '+$scope.sound.name);
 
     //Simple error checking
     if($scope.sound.name === "") {
       navigator.notification.alert("Name this sound first.", null, "Error");
-      return;     
+      return;
     }
-    
+
     if(!$scope.sound.file) {
       navigator.notification.alert("Record a sound first.", null, "Error");
-      return;     
+      return;
     }
-    
+
     /*
     begin the copy to persist location
-    
+
     first, this path below is persistent on both ios and and
     */
     var loc = cordova.file.dataDirectory;
     /*
-    but now we have an issue with file name. so let's use the existing extension, 
+    but now we have an issue with file name. so let's use the existing extension,
     but a unique filename based on seconds since epoch
     */
     var extension = $scope.sound.file.split(".").pop();
@@ -322,38 +311,38 @@ $scope.closeKeyboard = function() {
             });
             $state.go("home");
           });
-          
+
         }, function(e) {
           console.log('error in coipy');console.dir(e);
-        });         
+        });
       }, function(e) {
         console.log("error in inner bullcrap");
         console.dir(e);
       });
-      
-      
+
+
     }, function(e) {
       console.log('error in fs');console.dir(e);
     });
 
-    
+
   }
 
   var captureError = function(e) {
     console.log('captureError' ,e);
   }
-  
+
   var captureSuccess = function(e) {
     console.log('captureSuccess');console.dir(e);
     $scope.sound.file = e[0].localURL;
     $scope.sound.filePath = e[0].fullPath;
   }
-  
+
   $scope.record = function() {
     navigator.device.capture.captureAudio(
       captureSuccess,captureError,{duration:10});
   }
-  
+
   $scope.play = function() {
     if(!$scope.sound.file) {
       navigator.notification.alert("Record a sound first.", null, "Error");

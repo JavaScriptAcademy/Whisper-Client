@@ -1,11 +1,11 @@
 <ion-view view-title="RecentChats">
   <ion-content>
-    <ion-list inset>
-      <a ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
-      <img ng-src="{{ room.image }}">
-      <h2>{{ room.name }}</h2>
-      <h4>{{ room.discription }}</h4>
-    </a>
+    <ion-list>
+      <ion-item ng-repeat="room in rooms" ng-click="enterRoom(room)" class="item item-thumbnail-left">
+         <img ng-src="https://unsplash.it/100/100/?random">
+        <h2>{{ room.name }}</h2>
+        <p>{{ room.discription }}</p>
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

@@ -1,12 +1,13 @@
-<ion-view view-title="Ionic Chat">
+<ion-view view-title="{{roomName}}">
 <ion-pane class="messaging-view">
 <ion-header-bar class="bar-calm">
-<h1 class="title">Ioinc Chat</h1>
+<!-- <h1 class="title">{{roomName}}</h1> -->
 </ion-header-bar>
 
 <ion-content class="content-stable"
 on-swipe-left="hideTime = false"
 on-swipe-right="hideTime = true">
+<div class="topic-content">{{topic}}</div>
 <div ng-repeat="message in messages" ng-class="{other: message.userId != currentUser._id}" class="messages">
 
 <div class="message">
