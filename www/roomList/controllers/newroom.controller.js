@@ -2,6 +2,20 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
 
 .controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService) {
   $scope.room = {};
+  $scope.image_src = '../img/ionic.png';
+
+  $scope.enterRoom =  function(room){
+    //insert user into rooms.members
+    let newMember = $scope.currentUser;
+    roomListService.addNewMember({
+      room : room,
+      userId : newMember._id
+    },(res)=>{
+      console.log(res);
+    })
+    $state.go('app.room',{roomId: room._id});
+  };
+
   $scope.createNewRoom = function(){
     var newRoom = {
       'name': $scope.room.name,
@@ -12,12 +26,12 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
       let newMember = $scope.currentUser;
       $scope.room = {};
       roomListService.addNewMember({
-        roomId : response.data._id,
+        room : response,
         userId : newMember._id
       },(res)=>{
         console.log(res);
       })
-      $state.go('app.room',{roomId: response.data._id});
+      $state.go('app.room',{roomId: response._id});
     });
   };
 

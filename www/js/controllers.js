@@ -59,10 +59,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   userService.on('created',function(){
   });
 
-
-
-
-
   $scope.doSignUp = function(){
     let newUser = $scope.signUpData;
 
@@ -101,20 +97,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 
 
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-  { title: 'Reggae', id: 1 },
-  { title: 'Chill', id: 2 },
-  { title: 'Dubstep', id: 3 },
-  { title: 'Indie', id: 4 },
-  { title: 'Rap', id: 5 },
-  { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 .directive('input', function($timeout) {
@@ -159,8 +141,10 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   $scope.messages = [];
   var rooms = $rootScope.app.service('rooms');
 
-  awesomeService.GetAllMessage($state.params.roomId, (responses) => {
-    $scope.messages = responses.messages;
+  awesomeService.GetAllMessage($state.params.roomId, (response) => {
+    $scope.topic = response.topic;
+    $scope.roomName = response.name;
+    $scope.messages = response.messages;
   });
 
   rooms.on('updated', function(message) {
