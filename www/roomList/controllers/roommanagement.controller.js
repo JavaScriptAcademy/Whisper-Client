@@ -5,7 +5,7 @@ angular.module('starter.roommanagement', ['ionic'])
   var roomsService = $rootScope.app.service('rooms');
 
   //init all room list
-  roomListService.GetAllRooms((response) => {
+  roomListService.GetAllRooms(function(response) {
     $scope.rooms = response.data.data;
   });
 

@@ -19,10 +19,10 @@
 <ion-content>
 
 <div  class="menuProfile" ng-show="currentUser != null">
-  <img ng-src="{{currentUser.profileImage}}" alt="Anonymous" class="avatar">
-  <div>
-    <span class="message-header">{{currentUser.nickname}}</span>
-  </div>
+	<img ng-src="{{currentUser.profileImage}}" alt="Anonymous" class="avatar">
+	<div>
+		<span class="message-header">{{currentUser.nickname}}</span>
+	</div>
 </div>
 
 <ion-list>
@@ -42,13 +42,13 @@ Logout
 <i class="icon ion-ios-chatboxes"></i>
 All Rooms
 </ion-item>
-<ion-item menu-close ui-sref="app.recentchats">
+<ion-item menu-close ui-sref="app.recentchats" ng-show="currentUser">
 <i class="icon ion-ios-chatbubble"></i>
 Recent Visits
 </ion-item>
-<ion-item menu-close ui-sref="app.management">
+<ion-item menu-close ui-sref="home" ng-show="currentUser">
 <i class="icon ion-ios-gear"></i>
-Room Management
+Voice Record
 </ion-item>
 </ion-list>
 </ion-content>

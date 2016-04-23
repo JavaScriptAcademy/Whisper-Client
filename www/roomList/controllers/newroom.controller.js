@@ -6,11 +6,11 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
 
   $scope.enterRoom =  function(room){
     //insert user into rooms.members
-    let newMember = $scope.currentUser;
+    var newMember = $scope.currentUser;
     roomListService.addNewMember({
       room : room,
       userId : newMember._id
-    },(res)=>{
+    }, function(res) {
       console.log(res);
     })
     $state.go('app.room',{roomId: room._id});
@@ -22,13 +22,13 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
       'discription': $scope.room.discription,
       'topic': $scope.room.topic,
     };
-    roomListService.CreateRoom(newRoom,(response)=>{
-      let newMember = $scope.currentUser;
+    roomListService.CreateRoom(newRoom,function(response){
+      var newMember = $scope.currentUser;
       $scope.room = {};
       roomListService.addNewMember({
         room : response,
         userId : newMember._id
-      },(res)=>{
+      },function(res) {
         console.log(res);
       })
       $state.go('app.room',{roomId: response._id});

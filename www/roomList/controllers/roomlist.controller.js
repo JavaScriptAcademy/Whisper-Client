@@ -5,15 +5,15 @@ angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
   var roomsService = $rootScope.app.service('rooms');
 
   //init all room list
-  roomListService.GetAllRooms((response) => {
+  roomListService.GetAllRooms(function(response) {
     $scope.rooms = response.data;
   });
 
   //listen to rooms events
   roomsService.on('created', function(room){
     // $scope.rooms.push(room);
-   roomListService.GetAllRooms((response) => {
-    $scope.rooms = response.data;
+    roomListService.GetAllRooms(function(response) {
+      $scope.rooms = response.data;
     });
 
     $timeout(function() {
@@ -23,11 +23,11 @@ angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
 
   $scope.enterRoom =  function(room){
     //insert user into rooms.members
-    let newMember = $scope.currentUser;
+    var newMember = $scope.currentUser;
     roomListService.addNewMember({
       room : room,
       userId : newMember._id
-    },(res)=>{
+    },function(res) {
       console.log('res',res);
     })
     $state.go('app.room',{roomId: room._id, roomName:room.name});

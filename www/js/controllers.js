@@ -60,15 +60,15 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   });
 
   $scope.doSignUp = function(){
-    let newUser = $scope.signUpData;
+    var newUser = $scope.signUpData;
 
-    loginService.generateRandomUser((user)=>{
+    loginService.generateRandomUser(function(user) {
       loginService.CreateNewUser({
         email: newUser.email,
         password: newUser.password,
         nickname:  user.results[0].name.first + ' ' + user.results[0].name.last,
         profileImage: user.results[0].picture.thumbnail
-      }, (user) =>{
+      }, function(user) {
         $cookies.put('user', JSON.stringify(user));
         $scope.currentUser = JSON.parse($cookies.get('user'));
         console.log( $scope.currentUser);
@@ -78,12 +78,12 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     });
 
     $scope.doLogin= function(){
-      let user = $scope.loginData;
+      var user = $scope.loginData;
 
       loginService.onLogin({
         email:user.email,
         password: user.password
-      },(res)=>{
+      }, function(res) {
         console.log(res)
       })
     }
@@ -91,7 +91,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 
   $scope.doLogin = function(){
-    let loginUser = $scope.signUpData;
+    var loginUser = $scope.signUpData;
     loginService.onLogin({email:loginUser.email,password:loginUser.password});
 
   }
@@ -143,7 +143,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   var rooms = $rootScope.app.service('rooms');
 
 
-  awesomeService.GetAllMessage($state.params.roomId, (response) => {
+  awesomeService.GetAllMessage($state.params.roomId, function(response) {
     $scope.topic = response.topic;
     $scope.roomName = response.name;
     $scope.messages = response.messages;
@@ -153,7 +153,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
 
 
   rooms.on('updated', function(message) {
-    awesomeService.GetAllMessage($state.params.roomId, (responses) => {
+    awesomeService.GetAllMessage($state.params.roomId, function(responses) {
       $scope.messages = responses.messages;
     });
 
@@ -169,9 +169,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   $scope.sendMessage = function() {
     alternate = !alternate;
 
-    var d = new Date();
-    d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
-    let newMessage = {
+    var newMessage = {
      text:$scope.data.message,
      userId:$scope.currentUser._id,
      userNickname:$scope.currentUser.nickname,
@@ -183,9 +181,9 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     $push:{
       messages:newMessage
     }
-  }).then(message => console.log(message));
+  }).then(function(message) { console.log(message) });
 
-   delete $scope.data.message;
+   $scope.data.message;
    $ionicScrollDelegate.scrollBottom(true);
 
  };
@@ -261,13 +259,13 @@ $scope.closeKeyboard = function() {
 
   }
 
-  $scope.delete = function(x) {
-    console.log('delete', x);
+  $scope.devare = function(x) {
+    console.log('devare', x);
     Sounds.get().then(function(sounds) {
       var toDie = sounds[x];
       window.resolveLocalFileSystemURL(toDie.file, function(fe) {
         fe.remove(function() {
-          Sounds.delete(x).then(function() {
+          Sounds.devare(x).then(function() {
             getSounds();
           });
         }, function(err) {
@@ -310,7 +308,7 @@ $scope.closeKeyboard = function() {
     */
     var loc = cordova.file.dataDirectory;
     /*
-    but now we have an issue with file name. so let's use the existing extension,
+    but now we have an issue with file name. so var's use the existing extension,
     but a unique filename based on seconds since epoch
     */
     var extension = $scope.sound.file.split(".").pop();

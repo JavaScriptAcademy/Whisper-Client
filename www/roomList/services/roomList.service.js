@@ -1,6 +1,6 @@
 angular.module('starter.roomlistservice', [])
 .factory('roomListService', function($rootScope,$http) {
-  let roomsService = $rootScope.app.service('rooms');
+  var roomsService = $rootScope.app.service('rooms');
 
   return {
     GetAllRooms:function(successCallback){

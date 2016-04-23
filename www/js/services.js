@@ -5,7 +5,7 @@ angular.module('starter.services', [])
       $http({
         url: "http://localhost:3030/rooms/"+roomId,
         method: "GET"
-      }).success((res)=>{
+      }).success(function(res) {
         successCallback(res);
       });
     }
@@ -28,7 +28,7 @@ angular.module('starter.services', [])
       $http({
         url: "https://randomuser.me/api/",
         method: "GET",
-      }).success((res)=>{
+      }).success(function(res) {
         successCallback(res);
       });
     },
