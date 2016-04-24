@@ -18,11 +18,22 @@ on-swipe-right="hideTime = true">
   </div>
 </div>
 </div>
+<ion-spinner icon="circles" class="col col-center spinner" ng-show="isRecording"></ion-spinner>
 </ion-content>
-
 <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
 <label class="item-input-wrapper">
-  <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+  <div class="row textDiv" ng-hide = "isVideo">
+    <button class="col col-10 icon ion-mic-a " ng-click="switch()"></button>
+    <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" class="col col-75 col-center"/>
+  </div>
+  <div class="row videoDiv" ng-show = "isVideo">
+    <button class="col col-10 icon ion-chatbubble-working" ng-click="switch()" ></button>
+    <label class="col col-75">
+      <button class="col col-center button button-small icon ion-mic-c" ng-click="startRecord()" ng-hide="isRecording">
+      <button class="col col-center button button-small icon ion-stop" ng-click="stopRecord()" ng-show="isRecording">
+      </button>
+    </label>
+  </div>
 </label>
 <button class="button button-clear" ng-click="sendMessage()">
   Send

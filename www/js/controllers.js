@@ -149,8 +149,22 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     $scope.messages = response.messages;
   });
 
+/*
+* Switch between text message and voice message
+* Added by Cyrus 4.24
+*/
+  $scope.isVideo = true;
+  $scope.isRecording = false;
+  $scope.switch = function(){
+    $scope.isVideo = !$scope.isVideo;
+  }
 
-
+  $scope.startRecord = function(){
+    $scope.isRecording = !$scope.isRecording;
+  }
+  $scope.stopRecord = function(){
+    $scope.isRecording = !$scope.isRecording;
+  }
 
   rooms.on('updated', function(message) {
     awesomeService.GetAllMessage($state.params.roomId, (responses) => {
@@ -256,7 +270,7 @@ $scope.closeKeyboard = function() {
         }, function(err) {
           console.log("media err", err);
         });
-        media.play();           
+        media.play();
       });
 
   }
