@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
   ,'starter.newRoomCtrl','starter.recentChatsCtrl','starter.roommanagement',
-  'media.voiceCtrl'])
+  'media.voiceCtrl','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

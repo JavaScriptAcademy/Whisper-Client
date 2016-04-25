@@ -150,20 +150,38 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   });
 
 /*
-* Switch between text message and voice message
+* #Switch between text message and voice message
 * Added by Cyrus 4.24
 */
   $scope.isVideo = true;
   $scope.isRecording = false;
   $scope.switch = function(){
     $scope.isVideo = !$scope.isVideo;
+    $scope.isRecording = false;
   }
 
   $scope.startRecord = function(){
     $scope.isRecording = !$scope.isRecording;
   }
   $scope.stopRecord = function(){
-    $scope.isRecording = !$scope.isRecording;
+    console.log('test');
+    //TODO: call function to send record to server
+    //insert record message to server
+    let newMessage = {
+     text:'TODO: real file path',
+     type:'voice',
+     userId:$scope.currentUser._id,
+     userNickname:$scope.currentUser.nickname,
+     userProfileImage:$scope.currentUser.profileImage
+   }
+   rooms.update({
+    _id:$state.params.roomId
+  },{
+    $push:{
+      messages:newMessage
+    }
+  }).then(message => console.log(message));
+   $scope.isRecording = !$scope.isRecording;
   }
 
   rooms.on('updated', function(message) {
@@ -187,6 +205,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
     let newMessage = {
      text:$scope.data.message,
+     type:'text',
      userId:$scope.currentUser._id,
      userNickname:$scope.currentUser.nickname,
      userProfileImage:$scope.currentUser.profileImage
