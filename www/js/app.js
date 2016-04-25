@@ -6,21 +6,8 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl',
   'starter.newRoomCtrl','starter.recentChatsCtrl','starter.roommanagement',
-  'notix.controllers', 'notix.services', 'notix.directives'])
-.constant('options', {
-  range: {
-    pitch: 7,
-    tempo: 50
-  },
-  defaults: {
-    pitch: 0,
-    tempo: 100
-  },
-  consts: {
-    pitchExp: 0.69314718056,
-    EOF: 65535
-  }
-})
+  'media.voiceCtrl',
+  'notix'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -48,6 +35,15 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
     url:'/new',
     controller: 'RecordCtrl',
     templateUrl: 'templates/new.html'
+  })
+  .state('app.voice', {
+    url:'/testvoice',
+    views: {
+      'menuContent': {
+        templateUrl: 'voice/views/testVoice.html',
+        controller: 'VoiceCtrl',
+      }
+    }
   })
   .state('app.roomlist', {
     url: '/roomlist',
@@ -106,8 +102,12 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
   })
   .state('app.audio', {
     url: '/audio',
-    templateUrl: 'templates/audiotest.html',
-    controller: 'audioController'
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/audiotest.html',
+        controller: 'audioController',
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/roomlist');

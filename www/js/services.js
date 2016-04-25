@@ -56,14 +56,14 @@ angular.module('starter.services', [])
       deferred.resolve();
     });
 
-    return deferred.promise;      
+    return deferred.promise;
 
   }
-  
+
   var getSounds = function() {
     var deferred = $q.defer();
     var sounds = [];
-    
+
     if(localStorage.mysoundboard) {
       sounds = JSON.parse(localStorage.mysoundboard);
     }
@@ -71,7 +71,7 @@ angular.module('starter.services', [])
 
     return deferred.promise;
   }
-  
+
   var playSound = function(x) {
     getSounds().then(function(sounds) {
       var sound = sounds[x];
@@ -89,10 +89,10 @@ angular.module('starter.services', [])
       }, function(err) {
         console.log("media err", err);
       });
-      media.play();     
-    });   
+      media.play();
+    });
   }
-  
+
   var saveSound = function(s) {
     console.log("calling saveSound");
     var deferred = $q.defer();
@@ -102,7 +102,7 @@ angular.module('starter.services', [])
       deferred.resolve();
     });
 
-    return deferred.promise;      
+    return deferred.promise;
   }
 
   return {
