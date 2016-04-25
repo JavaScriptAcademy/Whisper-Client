@@ -1,0 +1,39 @@
+/* Empty. Add your own CSS if you like */
+
+.selectFile {
+  color: transparent !important;
+  width: 100% !important;
+
+}
+
+.selectFile:hover {
+  color: transparent;
+}
+.selectFile::-webkit-file-upload-button {
+  visibility: hidden;
+
+}
+.selectFile::before {
+  content: 'Select file';
+  display: inline-block;
+  color: white;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-align: center;
+  position: absolute;
+  left: -2px;
+  top: 5px;
+  width: 100%;
+}
+
+html, body {
+}
+
+.card.left {
+  float: left;
+  min-width: calc(50% - 10px);
+  max-width: 480px;
+  margin-right: 10px;
+};
