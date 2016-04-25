@@ -14,12 +14,11 @@
           <span class="input-label">Discription</span>
           <input type="text" ng-model="room.discription">
         </label>
-
         <label class="item item-input">
           <span class="input-label">Upload Image</span>
           <div class="imageHolder">
-            <img src="{{image_src}}" class="roomImage">
-            <input type="file" ng-model="imageUpload" class="imageUpload"></input>
+            <input type="file" file-model = "myFile"></input>
+            <button ng-click = "uploadFile()">upload me</button>
           </div>
         </label>
         <button class="button button-full button-positive">Create</button>

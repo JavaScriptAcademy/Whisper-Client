@@ -1,6 +1,7 @@
-angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
+angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice',
+  'media.voiceService'])
 
-.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService) {
+.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService,voiceService) {
   $scope.room = {};
   $scope.image_src = '../img/ionic.png';
 
@@ -14,6 +15,16 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
       console.log(res);
     })
     $state.go('app.room',{roomId: room._id});
+  };
+  $scope.uploadFile = function(){
+    //get file from filePath
+    var file = $scope.myFile;
+
+    console.log('file is ' );
+    console.dir(file);
+
+    var uploadUrl = "/fileUpload";
+    voiceService.uploadFileToUrl(file, uploadUrl);
   };
 
   $scope.createNewRoom = function(){
@@ -36,4 +47,19 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
   };
 
 
-});
+})
+.directive('fileModel', ['$parse', function ($parse) {
+  return {
+   restrict: 'A',
+   link: function(scope, element, attrs) {
+    var model = $parse(attrs.fileModel);
+    var modelSetter = model.assign;
+
+    element.bind('change', function(){
+     scope.$apply(function(){
+      modelSetter(scope, element[0].files[0]);
+    });
+   });
+  }
+}
+}]);
