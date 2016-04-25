@@ -166,6 +166,7 @@ angular.module('notix.controllers', ['notix.directives', 'notix.services'])
         template: "Reading file..."
       });
       fileReader.readAsArrayBuffer($scope.file);
+
     }
   });
   var progressWatch = $interval(function() {
