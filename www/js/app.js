@@ -31,11 +31,11 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
     controller: 'HomeCtrl',
     templateUrl: 'templates/home.html'
   })
-  .state('new', {
-    url:'/new',
-    controller: 'RecordCtrl',
-    templateUrl: 'templates/new.html'
-  })
+  // .state('new', {
+  //   url:'/new',
+  //   controller: 'RecordCtrl',
+  //   templateUrl: 'templates/new.html'
+  // })
   .state('app.voice', {
     url:'/testvoice',
     views: {
