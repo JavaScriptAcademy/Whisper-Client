@@ -60,15 +60,15 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   });
 
   $scope.doSignUp = function(){
-    let newUser = $scope.signUpData;
+    var newUser = $scope.signUpData;
 
-    loginService.generateRandomUser((user)=>{
+    loginService.generateRandomUser(function(user) {
       loginService.CreateNewUser({
         email: newUser.email,
         password: newUser.password,
         nickname:  user.results[0].name.first + ' ' + user.results[0].name.last,
         profileImage: user.results[0].picture.thumbnail
-      }, (user) =>{
+      }, function(user) {
         $cookies.put('user', JSON.stringify(user));
         $scope.currentUser = JSON.parse($cookies.get('user'));
         console.log( $scope.currentUser);
@@ -78,12 +78,12 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     });
 
     $scope.doLogin= function(){
-      let user = $scope.loginData;
+      var user = $scope.loginData;
 
       loginService.onLogin({
         email:user.email,
         password: user.password
-      },(res)=>{
+      }, function(res) {
         console.log(res)
       })
     }
@@ -91,7 +91,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 
   $scope.doLogin = function(){
-    let loginUser = $scope.signUpData;
+    var loginUser = $scope.signUpData;
     loginService.onLogin({email:loginUser.email,password:loginUser.password});
 
   }
@@ -137,37 +137,104 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   }
 })
 
-.controller('MessagesControl', function($rootScope, $scope, $state, $timeout, $ionicScrollDelegate,awesomeService) {
+.controller('MessagesControl', function($rootScope, $scope, $state, $timeout, 
+  $ionicScrollDelegate,awesomeService, Sounds, $ionicHistory) {
   $scope.messages = [];
+  $scope.roomName=$state.params.roomName;
   var rooms = $rootScope.app.service('rooms');
 
-  awesomeService.GetAllMessage($state.params.roomId, (response) => {
+
+  // record service
+
+
+  $scope.sound = {name:""};
+
+  $scope.saveSound = function() {
+    console.log('trying to save '+$scope.sound.name);
+
+    //Simple error checking
+    if($scope.sound.name === "") {
+      navigator.notification.alert("Name this sound first.", null, "Error");
+      return;
+    }
+
+    if(!$scope.sound.file) {
+      navigator.notification.alert("Record a sound first.", null, "Error");
+      return;
+    }
+
+    Sounds.save($scope.sound).then(function() {
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go("home");
+    });
+  }
+
+  var captureError = function(e) {
+    console.log('captureError' ,e);
+  }
+
+  var captureSuccess = function(e) {
+    console.log('captureSuccess');
+    console.dir(e);
+    $scope.sound.file = e[0].localURL;
+    $scope.sound.filePath = e[0].fullPath;
+    $state.go("app.audio",{videoURL:$scope.sound.file});
+  }
+
+  $scope.record = function() {
+    navigator.device.capture.captureAudio(
+      captureSuccess,captureError,{duration:120});
+    console.log("Recording...");
+  }
+
+  $scope.play = function() {
+    if(!$scope.sound.file) {
+      navigator.notification.alert("Record a sound first.", null, "Error");
+      return;
+    }
+    var media = new Media($scope.sound.file, function(e) {
+      media.release();
+    }, function(err) {
+      console.log("media err", err);
+    });
+    media.play();
+  }
+  // end of record service
+
+
+  awesomeService.GetAllMessage($state.params.roomId, function(response) {
     $scope.topic = response.topic;
     $scope.roomName = response.name;
     $scope.messages = response.messages;
   });
 
-  rooms.on('updated', function(message) {
-    awesomeService.GetAllMessage($state.params.roomId, (responses) => {
-      $scope.messages = responses.messages;
-    });
+/*
+* #Switch between text message and voice message
+* Added by Cyrus 4.24
+*/
+$scope.isVideo = true;
+$scope.isRecording = false;
+$scope.switch = function(){
+  $scope.isVideo = !$scope.isVideo;
+  $scope.isRecording = false;
+}
 
-    $timeout(function() {
-      $ionicScrollDelegate.scrollBottom(true);
-    }, 300);
-  });
+$scope.startRecord = function(){
+  $scope.isRecording = !$scope.isRecording;
+  $scope.record();
+}
+$scope.stopRecord = function(){
+  console.log('test');
 
-  $scope.hideTime = true;
-  var alternate,
-  isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
-
-  $scope.sendMessage = function() {
-    alternate = !alternate;
-
-    var d = new Date();
-    d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
-    let newMessage = {
-     text:$scope.data.message,
+  $scope.saveSound();
+  console.log($scope.sound.file);
+    //TODO: call function to send record to server
+    //insert record message to server
+    var newMessage = {
+     text:'TODO: real file path',
+     type:'voice',
      userId:$scope.currentUser._id,
      userNickname:$scope.currentUser.nickname,
      userProfileImage:$scope.currentUser.profileImage
@@ -178,15 +245,49 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     $push:{
       messages:newMessage
     }
-  }).then(message => console.log(message));
+  }).then(function (message){console.log(message)} );
+   $scope.isRecording = !$scope.isRecording;
+ }
 
-   delete $scope.data.message;
-   $ionicScrollDelegate.scrollBottom(true);
+ rooms.on('updated', function(message) {
+  awesomeService.GetAllMessage($state.params.roomId, function(responses) {
+    $scope.messages = responses.messages;
+  });
 
- };
+  $timeout(function() {
+    $ionicScrollDelegate.scrollBottom(true);
+  }, 300);
+});
+
+ $scope.hideTime = true;
+ var alternate,
+ isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
+
+ $scope.sendMessage = function() {
+  alternate = !alternate;
+
+  var newMessage = {
+   text:$scope.data.message,
+   type:'text',
+   userId:$scope.currentUser._id,
+   userNickname:$scope.currentUser.nickname,
+   userProfileImage:$scope.currentUser.profileImage
+ }
+ rooms.update({
+  _id:$state.params.roomId
+},{
+  $push:{
+    messages:newMessage
+  }
+}).then(function(message) { console.log(message) });
+
+ $scope.data.message;
+ $ionicScrollDelegate.scrollBottom(true);
+
+};
 
 
- $scope.inputUp = function() {
+$scope.inputUp = function() {
   if (isIOS) $scope.data.keyboardHeight = 216;
   $timeout(function() {
     $ionicScrollDelegate.scrollBottom(true);
@@ -229,19 +330,40 @@ $scope.closeKeyboard = function() {
     console.log('enter');
     getSounds();
   });
-  
+
   $scope.play = function(x) {
     console.log('play', x);
-    Sounds.play(x); 
+    // Sounds.play(x);
+    Sounds.get().then(function(sounds) {
+      var sound = sounds[x];
+      console.log(sound);
+
+        /*
+        Ok, so on Android, we just work.
+        On iOS, we need to rewrite to ../Library/NoCloud/FILE
+        */
+        var mediaUrl = sound.file;
+
+        // if(device.platform.indexOf("iOS") >= 0) {
+        //   mediaUrl = "../Library/NoCloud/" + mediaUrl.split("/").pop();
+        // }
+        var media = new Media(mediaUrl, function(e) {
+          media.release();
+        }, function(err) {
+          console.log("media err", err);
+        });
+        media.play();
+      });
+
   }
-  
-  $scope.delete = function(x) {
-    console.log('delete', x);
+
+  $scope.devare = function(x) {
+    console.log('devare', x);
     Sounds.get().then(function(sounds) {
       var toDie = sounds[x];
       window.resolveLocalFileSystemURL(toDie.file, function(fe) {
         fe.remove(function() {
-          Sounds.delete(x).then(function() {
+          Sounds.devare(x).then(function() {
             getSounds();
           });
         }, function(err) {
@@ -250,105 +372,14 @@ $scope.closeKeyboard = function() {
       });
     });
   }
-  
+
   $scope.cordova = {loaded:false};
   $ionicPlatform.ready(function() {
     $scope.$apply(function() {
       $scope.cordova.loaded = true;
     });
   });
-  
-})
-.controller('RecordCtrl', function($scope, Sounds, $state, $ionicHistory) {
 
-  $scope.sound = {name:""};
-  
-  $scope.saveSound = function() {
-    console.log('trying to save '+$scope.sound.name);
-
-    //Simple error checking
-    if($scope.sound.name === "") {
-      navigator.notification.alert("Name this sound first.", null, "Error");
-      return;     
-    }
-    
-    if(!$scope.sound.file) {
-      navigator.notification.alert("Record a sound first.", null, "Error");
-      return;     
-    }
-    
-    /*
-    begin the copy to persist location
-    
-    first, this path below is persistent on both ios and and
-    */
-    var loc = cordova.file.dataDirectory;
-    /*
-    but now we have an issue with file name. so let's use the existing extension, 
-    but a unique filename based on seconds since epoch
-    */
-    var extension = $scope.sound.file.split(".").pop();
-    var filepart = Date.now();
-    var filename = filepart + "." + extension;
-    console.log("new filename is "+filename);
-
-    window.resolveLocalFileSystemURL(loc, function(d) {
-      window.resolveLocalFileSystemURL($scope.sound.file, function(fe) {
-        fe.copyTo(d, filename, function(e) {
-          console.log('success inc opy');
-          console.dir(e);
-          $scope.sound.file = e.nativeURL;
-          $scope.sound.path = e.fullPath;
-
-          Sounds.save($scope.sound).then(function() {
-            $ionicHistory.nextViewOptions({
-              disableBack: true
-            });
-            $state.go("home");
-          });
-          
-        }, function(e) {
-          console.log('error in coipy');console.dir(e);
-        });         
-      }, function(e) {
-        console.log("error in inner bullcrap");
-        console.dir(e);
-      });
-      
-      
-    }, function(e) {
-      console.log('error in fs');console.dir(e);
-    });
-
-    
-  }
-
-  var captureError = function(e) {
-    console.log('captureError' ,e);
-  }
-  
-  var captureSuccess = function(e) {
-    console.log('captureSuccess');console.dir(e);
-    $scope.sound.file = e[0].localURL;
-    $scope.sound.filePath = e[0].fullPath;
-  }
-  
-  $scope.record = function() {
-    navigator.device.capture.captureAudio(
-      captureSuccess,captureError,{duration:10});
-  }
-  
-  $scope.play = function() {
-    if(!$scope.sound.file) {
-      navigator.notification.alert("Record a sound first.", null, "Error");
-      return;
-    }
-    var media = new Media($scope.sound.file, function(e) {
-      media.release();
-    }, function(err) {
-      console.log("media err", err);
-    });
-    media.play();
-  }
 });
+
 

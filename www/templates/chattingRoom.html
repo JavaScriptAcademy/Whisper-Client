@@ -1,7 +1,7 @@
 <ion-view view-title="{{roomName}}">
 <ion-pane class="messaging-view">
 <ion-header-bar class="bar-calm">
-<h1 class="title">{{roomName}}</h1>
+<!-- <h1 class="title">{{roomName}}</h1> -->
 </ion-header-bar>
 
 <ion-content class="content-stable"
@@ -10,23 +10,39 @@ on-swipe-right="hideTime = true">
 <div class="topic-content">{{topic}}</div>
 <div ng-repeat="message in messages" ng-class="{other: message.userId != currentUser._id}" class="messages">
 
-<div class="message">
-  <img ng-src="{{message.userProfileImage}}" alt="Anonymous" class="avatar">
-  <div class="message-right">
-    <span class="message-header">{{message.userNickname}}</span>
-    <span class="message-body">{{ message.text }}</span>
+  <div class="message">
+    <img ng-src="{{message.userProfileImage}}" alt="Anonymous" class="avatar">
+    <div class="message-right">
+      <span class="message-header">{{message.userNickname}}</span>
+      <span class="message-body">{{ message.text }}</span>
+    </div>
   </div>
 </div>
-</div>
+<ion-spinner icon="circles" class="col col-center spinner" ng-show="isRecording"></ion-spinner>
 </ion-content>
 
 <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
 <label class="item-input-wrapper">
-  <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+  <div class="row textDiv" ng-hide = "isVideo">
+    <button class="col col-10 icon ion-mic-a" ng-click="switch()"></button>
+    <label>
+      <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" class="col col-90 col-center"/>
+    </label>
+  </div>
+  <div class="row videoDiv" ng-show = "isVideo">
+    <button class="col col-10 icon ion-chatbubble-working" ng-click="switch()" ></button>
+    <label class="col col-90" ng-hide="isRecording">
+      <button class="col col-center button button-small icon ion-mic-c" ng-click="startRecord()" ></button>
+    </label>
+    <label class="col col-90" ng-show="isRecording">
+      <button class="col col-center button button-small icon ion-stop" ng-click="stopRecord()" ></button>
+    </label>
+  </div>
 </label>
 <button class="button button-clear" ng-click="sendMessage()">
   Send
 </button>
+
 </ion-footer-bar>
 </ion-pane>
 </ion-view>

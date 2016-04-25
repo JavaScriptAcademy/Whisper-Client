@@ -5,14 +5,14 @@ angular.module('starter.roommanagement', ['ionic'])
   var roomsService = $rootScope.app.service('rooms');
 
   //init all room list
-  roomListService.GetAllRooms((response) => {
+  roomListService.GetAllRooms(function(response) {
     $scope.rooms = response.data.data;
   });
 
   //listen to rooms events
-  roomsService.on('created', function(room){
-    $scope.rooms.push(room.messages);
-  });
+  // roomsService.on('created', function(room){
+  //   $scope.rooms.push(room.messages);
+  // });
   //pull to fresh
   $scope.doRefresh = function() {
     console.log('Refreshing!');

@@ -1,19 +1,30 @@
-angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
+angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice',
+  'media.voiceService'])
 
-.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService) {
+.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService,voiceService) {
   $scope.room = {};
   $scope.image_src = '../img/ionic.png';
 
   $scope.enterRoom =  function(room){
     //insert user into rooms.members
-    let newMember = $scope.currentUser;
+    var newMember = $scope.currentUser;
     roomListService.addNewMember({
       room : room,
       userId : newMember._id
-    },(res)=>{
+    }, function(res) {
       console.log(res);
     })
     $state.go('app.room',{roomId: room._id});
+  };
+  $scope.uploadFile = function(){
+    //get file from filePath
+    var file = $scope.myFile;
+
+    console.log('file is ' );
+    console.dir(file);
+
+    var uploadUrl = "/fileUpload";
+    voiceService.uploadFileToUrl(file, uploadUrl);
   };
 
   $scope.createNewRoom = function(){
@@ -22,13 +33,13 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
       'discription': $scope.room.discription,
       'topic': $scope.room.topic,
     };
-    roomListService.CreateRoom(newRoom,(response)=>{
-      let newMember = $scope.currentUser;
+    roomListService.CreateRoom(newRoom,function(response){
+      var newMember = $scope.currentUser;
       $scope.room = {};
       roomListService.addNewMember({
         room : response,
         userId : newMember._id
-      },(res)=>{
+      },function(res) {
         console.log(res);
       })
       $state.go('app.room',{roomId: response._id});
@@ -36,4 +47,19 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
   };
 
 
-});
+})
+.directive('fileModel', ['$parse', function ($parse) {
+  return {
+   restrict: 'A',
+   link: function(scope, element, attrs) {
+    var model = $parse(attrs.fileModel);
+    var modelSetter = model.assign;
+
+    element.bind('change', function(){
+     scope.$apply(function(){
+      modelSetter(scope, element[0].files[0]);
+    });
+   });
+  }
+}
+}]);

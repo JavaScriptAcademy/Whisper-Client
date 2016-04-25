@@ -170,3 +170,15 @@
     color: #999;
     font-size: 1.05em;
   }
+  .videoDiv{
+    margin-top: 10px !important;
+  }
+  .spinner{
+    position: absolute;
+    top: 130%;
+    left:43%;
+  }
+
+.bar .button, .bar button{
+  padding: 0;
+}
