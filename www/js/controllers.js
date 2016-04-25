@@ -144,7 +144,6 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
   var rooms = $rootScope.app.service('rooms');
 
 
-
   // record service
 
 
@@ -181,7 +180,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     console.dir(e);
     $scope.sound.file = e[0].localURL;
     $scope.sound.filePath = e[0].fullPath;
-    $state.go("home");
+    $state.go("app.audio",{videoURL:$scope.sound.file});
   }
 
   $scope.record = function() {

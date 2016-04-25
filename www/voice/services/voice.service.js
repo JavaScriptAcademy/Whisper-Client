@@ -1,4 +1,4 @@
-angular.module('media.voiceService', ['ionic','ngCordova'])
+angular.module('media.voiceService', ['ionic'])
 .factory('voiceService', function($http, $cordovaFileTransfer,$ionicPlatform) {
   return {
     uploadFileToUrl:function(serverUrl, fileUrl, successCallback){

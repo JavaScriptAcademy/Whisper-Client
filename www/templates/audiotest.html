@@ -1,0 +1,82 @@
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">NOTIX</h1>
+      </ion-header-bar>
+      <ion-content ng-show="!audio.context" class="has-header padding">
+        <div class="card">
+        <i class="icon ion-sad"></i> Your device doesn't support web audio API.
+        </div>
+      </ion-content>
+      <ion-content ng-show="audio.context" class="has-header padding">
+        <div class="card">
+          <div class="button button-block selectFile button-calm" ng-click="goFullScreen()" file-input="file" accept="audio/*" on-change="readFile()"></div>
+        </div>
+        <div class="card left" ng-show="state.status > enums.state.init">
+          <div class="item item-text-wrap">
+            {{file.name | limitTo: 40 }} ({{ getDuration(state.duration) | date: 'mm:ss' }})
+          </div>
+          <div class="range range-dark">
+            <i class="icon ion-play" ng-click="toggleState()" ng-class="{'ion-play': state.status === enums.state.ready, 'ion-pause': state.status === enums.state.playing}"></i>
+            {{ getDuration((audio.filter.sourcePosition || 0) / (audio.buffer.sampleRate || 1)) | date: 'mm:ss' }}
+            <input type="range" name="progress" ng-model="state.progress" min="0" max="{{state.duration}}" step="0.01" ng-change="seekTo(state.progress)" />
+            {{ getDuration(state.duration) | date: 'mm:ss' }}
+            <i class="icon ion-stop" ng-click="stopPlaying()"></i>
+          </div>
+          <div class="range range-assertive">
+            <i class="icon ion-volume-low"></i>
+            <input type="range" name="volume" ng-model="audio.gainNode.gain.value" min="0" max="1" step="0.05" />
+            <i class="icon ion-volume-high"></i>
+          </div>
+          <div class="range range-positive">
+            <i class="icon ion-ios7-rewind"></i>
+            <input type="range" name="tempo" ng-model="state.tempo" min="{{options.defaults.tempo - options.range.tempo}}" max="{{options.defaults.tempo + options.range.tempo}}" step="5" ng-change="setPitch(state.pitch, state.tempo)" />
+            <i class="icon ion-ios7-fastforward"></i>
+          </div>
+          <div class="range range-royal">
+            <i class="icon ion-arrow-graph-down-right"></i>
+            <input type="range" name="pitch" ng-model="state.pitch" min="{{-options.range.pitch}}" max="{{options.range.pitch}}" step="0.5" ng-change="setPitch(state.pitch, state.tempo)" />
+            <i class="icon ion-arrow-graph-up-right"></i>
+          </div>
+        </div>
+        <div class="card left" ng-show="state.status > enums.state.init">
+          <div class="item item-input">
+            <i class="icon ion-android-volume"></i>
+            <span class="input-label">Volume (%): </span>
+            {{audio.gainNode.gain.value.toFixed(1) * 100}}
+          </div>
+          <div class="item item-input">
+            <i class="icon ion-ios7-speedometer-outline"></i>
+            <span class="input-label">Playback Rate (%):</span>
+            <input type="text" ng-model="state.tempo" min="50" max="150" />
+          </div>
+          <div class="item item-input">
+            <i class="icon ion-arrow-graph-up-right"></i>
+            <span class="input-label">Pitch(Semitones):</span>
+            <input type="text" ng-model="state.pitch" min="-7" max="7" />
+          </div>
+          <div track-progress progress="state.progress" total="state.duration" on-change="seekTo">
+          </div>
+          <div class="item">
+            <button class="button button-block icon-left button-assertive" ng-click="resetParams()"><i class="icon ion-ios7-refresh-outline"></i>&nbsp;Reset</button>
+          </div>
+        </div>
+        <div class="card" ng-show="state.status === enums.state.init">
+          <div class="item item-text-wrap text-center">
+            Select a file, and change the tone and tempo for your needs. <br/>
+            Please make sure you are using the latest Chrome browser!
+          </div>
+        </div>
+      </ion-content>
+    </ion-pane>
+
+    <script type="text/ng-template" id="trackProgress.html">
+      <div class="item item-input">
+        <span class="input-label">
+          <i class="icon ion-ios7-stopwatch-outline"></i>
+          Start from:
+        </span>
+        <input type='text' ng-model='time' placeholder="00:00" style="padding-right: 0; max-width: 3.5em;" />
+        <button class="button-calm button" ng-click="setProgress(time)" style="margin-left: 60px;"><i class="icon ion-play"></i></button>
+      </div>
+    </script>

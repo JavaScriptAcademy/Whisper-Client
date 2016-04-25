@@ -178,3 +178,7 @@
     top: 130%;
     left:43%;
   }
+
+.bar .button, .bar button{
+  padding: 0;
+}
