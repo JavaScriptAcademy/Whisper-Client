@@ -1,15 +1,21 @@
-<ion-view view-title="RoomList">
+<ion-view view-title="RoomManagement">
   <ion-content>
-    </div>
-    <ion-scroll zooming="true" direction="xy" style="max-height: 500px">
-    <div class="list list-inset">
-      <a ng-repeat="room in rooms" href="#/app/chatRoom/{{room._id}}" class="item item-thumbnail-left">
-      <img ng-src="{{ room.image }}">
-      <h2>{{ room.name }}</h2>
-      <h4>{{ room.discription }}</h4>
-    </a>
-    </div>
-    </ion-scroll>
-
+    <ion-refresher on-refresh="doRefresh()">
+    </ion-refresher>
+      <ion-list>
+        <ion-item ng-repeat="room in rooms" class="item item-thumbnail-left">
+           <img ng-src="https://unsplash.it/100/100/?random">
+          <h2>{{ room.name }}</h2>
+          <p>{{ room.discription }}</p>
+          <button class="button button-balanced col-offset-75" ng-click="edit()">Edit</button>
+          <button class="button button-assertive" ng-click="remove()">Delete</button>
+        </ion-item>
+      </ion-list>
   </ion-content>
+    <div class="bar bar-footer bar-balanced">
+      <button class="button ion-plus-circled button-block button-balanced"
+             id="createRoom" data-ui-sref="app.newroom">
+              New Room
+      </button>
+    </div>
 </ion-view>
