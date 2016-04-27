@@ -3,9 +3,13 @@ angular.module('media.voiceService', ['ionic'])
   return {
     uploadFileToUrl:function(serverUrl, fileUrl, successCallback){
       $ionicPlatform.ready(function() {
-         $cordovaFileTransfer.upload(serverUrl,fileUrl,successCallback,function(res){
-            console.log('voice service response: '+res);
-          });
+        console.log('ionicPlatform is ready');
+        console.log('serverUrl:'+serverUrl);
+        console.log('fileUrl:'+fileUrl);
+        console.log('successCallback:'+successCallback);
+        $cordovaFileTransfer.upload(serverUrl,fileUrl,successCallback,function(res){
+          console.log('fail: voice service response: '+res);
+        });
       });
     }
    }

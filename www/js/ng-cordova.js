@@ -3154,8 +3154,10 @@ angular.module('ngCordova.plugins.fileTransfer', [])
       },
 
       upload: function (server, filePath, options, trustAllHosts) {
+        console.log('enter fileTransfer.upload');
         document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady(){
+          console.log('enter onDeviceReady');
           var q = $q.defer();
           var ft = new FileTransfer();
           var uri = (options && options.encodeURI === false) ? server : encodeURI(server);
