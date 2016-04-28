@@ -8,16 +8,28 @@ angular.module('starter.roomlistservice', [])
       // console.log('rooms',rooms);
       // return rooms;
     },
+    GetOwnedRooms:function(userId,successCallback){
+      $http({
+        method: 'GET',
+        url: 'http://localhost:3030/rooms/getOwnRooms/'+userId
+      }).then(successCallback)
+      // roomsService.find({ownerId: userId}).then(successCallback);
+    },
     GetRecentVisit:function(userId, successCallback){
       $http({
         method: 'GET',
         url: 'http://localhost:3030/users/getRecentVisit/'+userId
-
       }).then(successCallback)
     },
     CreateRoom:function(room, successCallback){
       roomsService.create(room).then(successCallback);
       // $http.post('http://localhost:3030/rooms/', room).then(successCallback);
+    },
+    RemoveRoom:function(roomId,successCallback){
+      roomsService.remove(roomId).then(successCallback);
+    },
+    EditRoom:function(roomId,room,successCallback){
+      roomsService.update(roomId,room).then(successCallback);
     },
     addNewMember:function(data, successCallback){
       $http.post('http://localhost:3030/users/resetRecentVisit', data).then(function(res){

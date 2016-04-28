@@ -3,23 +3,28 @@ angular.module('starter.roomListCtrl', ['ionic','starter.roomlistservice'])
 .controller('RoomListCtrl', function($rootScope,$scope,$state,$timeout,$ionicScrollDelegate,roomListService) {
   $scope.rooms = [];
   var roomsService = $rootScope.app.service('rooms');
-
-  //init all room list
-  roomListService.GetAllRooms((response) => {
-    $scope.rooms = response.data;
-  });
-
-  //listen to rooms events
-  roomsService.on('created', function(room){
-    // $scope.rooms.push(room);
-   roomListService.GetAllRooms((response) => {
+  getAllRooms();
+  function getAllRooms(){
+    roomListService.GetAllRooms((response) => {
     $scope.rooms = response.data;
     });
 
     $timeout(function() {
       $ionicScrollDelegate.scrollBottom(true);
     }, 300);
+  }
+
+  //listen to rooms events
+  roomsService.on('created', function(room){
+    getAllRooms();
   });
+  roomsService.on('removed', function(room){
+    getAllRooms();
+  });
+  roomsService.on('updated', function(room){
+    getAllRooms();
+  });
+
 
   $scope.enterRoom =  function(room){
     //insert user into rooms.members

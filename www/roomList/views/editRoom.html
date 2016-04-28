@@ -1,0 +1,28 @@
+<ion-view view-title="EditRoom">
+  <ion-content>
+    <div class="list list-inset">
+      <form ng-submit="editRoom(room)">
+        <label class="item item-input" >
+          <span class="input-label">Room Name</span>
+          <input type="text" ng-model="room.name" disabled>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Topic</span>
+          <input type="text" ng-model="room.topic">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Discription</span>
+          <input type="text" ng-model="room.discription" disabled>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Upload Image</span>
+          <div class="imageHolder">
+            <input type="file" file-model = "myFile"></input>
+            <button ng-click = "uploadFile()">upload me</button>
+          </div>
+        </label>
+        <button class="button button-full button-positive">Submit</button>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

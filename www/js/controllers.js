@@ -153,11 +153,11 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
 * #Switch between text message and voice message
 * Added by Cyrus 4.24
 */
-  $scope.isVideo = true;
+  $scope.isVideo = false;
   $scope.isRecording = false;
   $scope.switch = function(){
-    $scope.isVideo = !$scope.isVideo;
-    $scope.isRecording = false;
+    // $scope.isVideo = !$scope.isVideo;
+    // $scope.isRecording = false;
   }
 
   $scope.startRecord = function(){

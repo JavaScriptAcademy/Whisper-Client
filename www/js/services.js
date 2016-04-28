@@ -8,6 +8,7 @@ angular.module('starter.services', [])
       }).success((res)=>{
         successCallback(res);
       });
+
     }
   }
 })
@@ -94,7 +95,7 @@ angular.module('starter.services', [])
   }
 
   var saveSound = function(s) {
-    console.log("calling saveSound");
+    console.log("calling saveSound!");
     var deferred = $q.defer();
     getSounds().then(function(sounds) {
       sounds.push(s);

@@ -7,8 +7,8 @@
            <img ng-src="https://unsplash.it/100/100/?random">
           <h2>{{ room.name }}</h2>
           <p>{{ room.discription }}</p>
-          <button class="button button-balanced col-offset-75" ng-click="edit()">Edit</button>
-          <button class="button button-assertive" ng-click="remove()">Delete</button>
+          <button class="button button-balanced col-offset-75" ng-click="edit(room._id)">Edit</button>
+          <button class="button button-assertive" ng-click="remove(room._id)">Delete</button>
         </ion-item>
       </ion-list>
   </ion-content>

@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
   ,'starter.newRoomCtrl','starter.recentChatsCtrl','starter.roommanagement',
-  'media.voiceCtrl','ngCordova'])
+  'media.voiceCtrl','starter.editRoomCtrl','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -61,6 +61,25 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
         templateUrl: 'roomList/views/newRoom.html',
         controller: 'NewRoomCtrl',
         controllerAs: 'vm',
+      }
+    }
+  })
+  .state('app.editroom', {
+    url: '/editroom/:roomId',
+    views: {
+      'menuContent': {
+        templateUrl: 'roomList/views/editRoom.html',
+        controller: 'EditRoomCtrl',
+        controllerAs: 'vm',
+      }
+    }
+  })
+   .state('app.upload', {
+    url: '/upload',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/testUpload.html',
+        controller: 'RecentChatsCtrl',
       }
     }
   })

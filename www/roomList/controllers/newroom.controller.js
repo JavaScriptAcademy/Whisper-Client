@@ -1,7 +1,6 @@
-angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice',
-  'media.voiceService'])
+angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice'])
 
-.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService,voiceService) {
+.controller('NewRoomCtrl', function($rootScope,$scope,$state,roomListService) {
   $scope.room = {};
   $scope.image_src = '../img/ionic.png';
 
@@ -32,6 +31,7 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice',
       'name': $scope.room.name,
       'discription': $scope.room.discription,
       'topic': $scope.room.topic,
+      'ownerId': $scope.currentUser,
     };
     roomListService.CreateRoom(newRoom,(response)=>{
       let newMember = $scope.currentUser;
@@ -47,19 +47,4 @@ angular.module('starter.newRoomCtrl', ['ionic','starter.roomlistservice',
   };
 
 
-})
-.directive('fileModel', ['$parse', function ($parse) {
-  return {
-   restrict: 'A',
-   link: function(scope, element, attrs) {
-    var model = $parse(attrs.fileModel);
-    var modelSetter = model.assign;
-
-    element.bind('change', function(){
-     scope.$apply(function(){
-      modelSetter(scope, element[0].files[0]);
-    });
-   });
-  }
-}
-}]);
+});

@@ -4,7 +4,7 @@ angular.module('starter.recentChatsCtrl', ['ionic','starter.roomlistservice'])
   var roomsService = $rootScope.app.service('rooms');
   var userService = $rootScope.app.service('users');
   var currentUser = $scope.currentUser;
-
+  getRecentVisit();
   $scope.enterRoom =  function(room){
     //insert user into rooms.members
     let newMember = $scope.currentUser;
@@ -21,12 +21,16 @@ angular.module('starter.recentChatsCtrl', ['ionic','starter.roomlistservice'])
     $scope.rooms = res.data;
   };
   userService.on('updated', function(room){
-   roomListService.GetRecentVisit(currentUser._id,setRooms);
+   getRecentVisit();
+  });
+  roomsService.on('removed', function(room){
+   getRecentVisit();
+  });
 
+  function getRecentVisit(){
+    roomListService.GetRecentVisit(currentUser._id,setRooms);
     $timeout(function() {
       $ionicScrollDelegate.scrollBottom(true);
     }, 300);
-  });
-
-  roomListService.GetRecentVisit(currentUser._id,setRooms);
+  }
 });
