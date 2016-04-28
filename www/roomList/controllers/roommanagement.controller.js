@@ -10,9 +10,22 @@ angular.module('starter.roommanagement', ['ionic'])
   });
 
   //listen to rooms events
-  // roomsService.on('created', function(room){
-  //   $scope.rooms.push(room.messages);
-  // });
+  roomsService.on('created', function(room){
+    // $scope.rooms.push(room);
+    roomListService.GetAllRooms(function (response){
+      $scope.rooms = response.data;
+    });
+
+    $timeout(function() {
+      $ionicScrollDelegate.scrollBottom(true);
+    }, 300);
+  });
+  $scope.remove = function() {
+
+  };
+  $scope.edit = function() {
+
+  };
   //pull to fresh
   $scope.doRefresh = function() {
     console.log('Refreshing!');
@@ -22,5 +35,4 @@ angular.module('starter.roommanagement', ['ionic'])
       $scope.$broadcast('scroll.refreshComplete');
     }, 1000);
   };
-
 });

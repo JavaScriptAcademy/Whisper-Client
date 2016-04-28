@@ -6,8 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl',
   'starter.newRoomCtrl','starter.recentChatsCtrl','starter.roommanagement',
-  'media.voiceCtrl',
-  'notix'])
+  'media.voiceCtrl','ngCordova'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -99,15 +98,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.roomListCtrl'
       }
     }
 
-  })
-  .state('app.audio', {
-    url: '/audio',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/audiotest.html',
-        controller: 'audioController',
-      }
-    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/roomlist');

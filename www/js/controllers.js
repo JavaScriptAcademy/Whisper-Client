@@ -1,6 +1,7 @@
-angular.module('starter.controllers', ['starter.services','ngCookies'])
+angular.module('starter.controllers', ['starter.services','media.voiceService','ngCookies'])
 
-.controller('AppCtrl',function( $rootScope, $scope, $cookies, $ionicModal, $timeout,loginService ,$state) {
+.controller('AppCtrl',function( $rootScope, $scope, $cookies, $ionicModal, $timeout,loginService ,
+  $state) {
 
   var socket = io('http://localhost:3030');
   var app = feathers()
@@ -138,7 +139,7 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
 })
 
 .controller('MessagesControl', function($rootScope, $scope, $state, $timeout, 
-  $ionicScrollDelegate,awesomeService, Sounds, $ionicHistory) {
+  $ionicScrollDelegate,awesomeService, voiceService,Sounds, $ionicHistory) {
   $scope.messages = [];
   $scope.roomName=$state.params.roomName;
   var rooms = $rootScope.app.service('rooms');
@@ -180,7 +181,35 @@ angular.module('starter.controllers', ['starter.services','ngCookies'])
     console.dir(e);
     $scope.sound.file = e[0].localURL;
     $scope.sound.filePath = e[0].fullPath;
-    $state.go("app.audio",{videoURL:$scope.sound.file});
+    //TODO: upload file
+    // var serverUrl = "cdvfile://localhost/temporary/";
+    // var serverUrl = $scope.sound.file.split(".")[0] + "new.wav";
+    var serverUrl = 'http://localhost:3030/fileUpload';
+
+  //   var newMessage = {
+  //    text:$scope.sound.file,
+  //    type:'video',
+  //    userId:$scope.currentUser._id,
+  //    userNickname:$scope.currentUser.nickname,
+  //    userProfileImage:$scope.currentUser.profileImage
+  //  }
+  //  rooms.update({
+  //   _id:$state.params.roomId
+  // },{
+  //   $push:{
+  //     messages:newMessage
+  //   }
+  // }).then(function(message) { console.log(message) });
+  console.log('file name: '+ $scope.sound.file );
+  voiceService.uploadFileToUrl(serverUrl,$scope.sound.file,successCallback, errorCallback);
+    // $state.go("app.audio",{videoURL:$scope.sound.file});
+    function successCallback(){
+      console.log('success')
+    }
+
+    function errorCallback(){
+      console.log('error')
+    }
   }
 
   $scope.record = function() {
