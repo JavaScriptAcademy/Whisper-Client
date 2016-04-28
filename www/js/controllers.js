@@ -1,8 +1,8 @@
 angular.module('starter.controllers', ['starter.services','ngCookies'])
 
 .controller('AppCtrl',function( $rootScope, $scope, $cookies, $ionicModal, $timeout,loginService ,$state) {
-
-  var socket = io('http://localhost:3030');
+  var serverURL ="http://10.22.72.93:3030";
+  var socket = io(serverURL);
   var app = feathers()
   .configure(feathers.socketio(socket))
   .configure(feathers.hooks())

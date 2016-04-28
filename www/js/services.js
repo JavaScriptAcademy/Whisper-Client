@@ -1,9 +1,10 @@
 angular.module('starter.services', [])
 .factory('awesomeService', function($http) {
+    var serverURL= 'http://10.22.72.93:3030';
   return {
     GetAllMessage:function(roomId, successCallback){
       $http({
-        url: "http://localhost:3030/rooms/"+roomId,
+        url: serverURL + "/rooms/"+roomId,
         method: "GET"
       }).success((res)=>{
         successCallback(res);
@@ -13,11 +14,12 @@ angular.module('starter.services', [])
   }
 })
 .factory('loginService',function($rootScope, $http){
+    var serverURL= 'http://10.22.72.93:3030';
   return{
     CreateNewUser : function(user, successCallback){
       return $http({
         method: 'POST',
-        url: 'http://localhost:3030/signup/',
+        url: serverURL+ '/signup/',
         data: user,
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +38,7 @@ angular.module('starter.services', [])
     onLogin:function(user, successCallback){
       return $http({
         method: 'POST',
-        url: 'http://localhost:3030/login/',
+        url: serverURL+ '/login/',
         data: user,
         headers: {
           'Content-Type': 'application/json'

@@ -1,7 +1,7 @@
 angular.module('starter.roomlistservice', [])
 .factory('roomListService', function($rootScope,$http) {
-  let roomsService = $rootScope.app.service('rooms');
-
+  var roomsService = $rootScope.app.service('rooms');
+  var serverURL ="http://10.22.72.93:3030";
   return {
     GetAllRooms:function(successCallback){
       roomsService.find({$sort: { createdAt: -1 } }).then(successCallback);
@@ -11,14 +11,14 @@ angular.module('starter.roomlistservice', [])
     GetOwnedRooms:function(userId,successCallback){
       $http({
         method: 'GET',
-        url: 'http://localhost:3030/rooms/getOwnRooms/'+userId
+        url: serverURL+'/rooms/getOwnRooms/'+userId
       }).then(successCallback)
       // roomsService.find({ownerId: userId}).then(successCallback);
     },
     GetRecentVisit:function(userId, successCallback){
       $http({
         method: 'GET',
-        url: 'http://localhost:3030/users/getRecentVisit/'+userId
+        url: serverURL+'/users/getRecentVisit/'+userId
       }).then(successCallback)
     },
     CreateRoom:function(room, successCallback){
@@ -32,7 +32,7 @@ angular.module('starter.roomlistservice', [])
       roomsService.update(roomId,room).then(successCallback);
     },
     addNewMember:function(data, successCallback){
-      $http.post('http://localhost:3030/users/resetRecentVisit', data).then(function(res){
+      $http.post( serverURL + '/users/resetRecentVisit', data).then(function(res){
         console.log('res',res);
         successCallback(res);
       });
