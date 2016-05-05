@@ -13,6 +13,7 @@ Several quick start options are available:
 
 * [Download the latest release](https://github.com/JavaScriptAcademy/Whisper-Client.git).
 * Clone the repo: `git@github.com:JavaScriptAcademy/Whisper-Client.git`.
+* install dependance: `npm install`
 
 ## Modules
  * Online Chat Room
@@ -33,10 +34,11 @@ Several quick start options are available:
 
 * <https://github.com/yancey1204>
 
+**Cyrus Cai**
+
+* <https://github.com/cyruscai>
+
 **Adam Yuan**
 
 * <https://github.com/freshmenyuan>
 
-**Cyrus Cai**
-
-* <https://github.com/cyruscai>
